@@ -1,0 +1,15 @@
+Package: joint.Cox
+Type: Package
+Title: Penalized Likelihood Estimation under the Joint Cox Models
+        Between TTP and OS for Meta-Analysis
+Version: 1.0
+Date: 2015-02-28
+Author: Takeshi Emura
+Maintainer: Takeshi Emura <emura@stat.ncu.edu.tw>
+Description: Perform regression analyses under the joint Cox proportional hazards model between TTP and OS for meta-analysis.
+ The method is applicable for meta-analysis combining several studies or for cluster survival data.  
+License: GPL-2
+Packaged: 2015-02-28 08:35:35 UTC; user
+NeedsCompilation: no
+Repository: CRAN
+Date/Publication: 2015-02-28 12:17:50
