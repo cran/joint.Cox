@@ -1,6 +1,10 @@
-081a7aa10a6bef688f5da88996ce6945 *DESCRIPTION
+81ff7262f4186c69558351d42149697b *DESCRIPTION
 df390c53434517b304ac5db487184641 *NAMESPACE
-f2ea8b58f5ba470eb6f3e1cf3d319b3e *R/joint.Cox-internal.R
-5283a4b6a4b6611b999ad6956a8f217d *R/jointCox.reg.R
-e9ed121d8910c66c75d153a2055cc200 *man/joint.Cox-package.Rd
-6929ea6e38e30684b1b5f7f85e45e08e *man/jointCox.reg.Rd
+5791570d5b4dc1cf28587d608e9c960a *R/joint.Cox-internal.R
+a6a7bd7595778878b0460e144bab0cb8 *R/jointCox.indep.reg.R
+6c3fc7a64eb9f2ac097b1b3ea3ba03ce *R/jointCox.reg.R
+d95482efeb72a7b9c660ff64dedf7cfe *data/dataOvarian.rda
+0b76f21eb772ac1d3ed0441f571c4dac *man/dataOvarian.Rd
+7dc14aae60e47f8381c195e6bebb745a *man/joint.Cox-package.Rd
+1e100bd8fdba4ad4016666310a97a13b *man/jointCox.indep.reg.Rd
+f53675dc106914ac599dc1a1c483b93f *man/jointCox.reg.Rd

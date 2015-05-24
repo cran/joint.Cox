@@ -1,24 +1,23 @@
-\name{jointCox.reg}
-\alias{jointCox.reg}
+\name{jointCox.indep.reg}
+\alias{jointCox.indep.reg}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Penalized Likelihood Estimation under the Joint Cox Models Between TTP 
  and OS for Meta-Analysis
 }
 \description{
-Perform regression analyses under a copula-based joint Cox proportional hazards model between TTP and OS for meta-analysis,
- which is proposed by Emura et al. (2015).
- The method extends the joint frailty model of Rondeau et al. (2011 Stat Methods Med Res) such that intra-subject 
-dependence is modeled via the Clayton copula.
+Perform regression analyses under a joint Cox proportional hazards model between TTP and OS for meta-analysis,
+ which is proposed by Rondeau et al. (2011 Stat Methods Med Res). 
  The method is applicable for meta-analysis combining several studies or for cluster survival data.
 }
 \usage{
-jointCox.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1, p0 = rep(0, 14),
- kappa_grid = c(seq(10, 1e+17, length = 30)), LCV_plot = TRUE, RNR_num = 10, Adj = 500)
+jointCox.indep.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
+ p0 = rep(0, 13), kappa_grid = c(seq(10, 1e+17, length = 30)), LCV_plot = TRUE,
+ RNR_num = 10, Adj = 500)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{t.event}{a vector object for time-to-progression (TTP)}
+ \item{t.event}{a vector object for time-to-progression (TTP)}
   \item{event}{a vector object for progression indicator (=1 if progression; =0 if not progression)}
   \item{t.death}{a vector object for overall survival (OS), i.e., time-to-death}
   \item{death}{a vector object for death indicator(=1 if death; =0 if not death)}
@@ -26,13 +25,12 @@ jointCox.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1, p0 = rep(
   \item{Z2}{a vector object for a covariate associated with OS}
   \item{group}{a vector object for a group identification number, like 1,2,3....}
   \item{alpha}{A value related to the frailty (e.g., alpha=0 or =1); alpha=1 is default}
-  \item{p0}{A vector of 14 initial values used for maximizing the log-likelihood; detault is rep(0,14)}
+  \item{p0}{A vector of 13 initial values used for maximizing the log-likelihood; detault is rep(0,13)}
   \item{kappa_grid}{a vector for candidate smoothing parameters in likelihood cross-validation (LCV)}
   \item{LCV_plot}{Plot the LCV curves if "TRUE"}
   \item{RNR_num}{The number of randomizations for the ititial p0}
   \item{Adj}{Numerical adjustment to prevent overflow; Adj=500 is recommended}
 }
-
 \details{
 Currently, only one covariate is allowed (p=1).
 }
@@ -41,8 +39,6 @@ Currently, only one covariate is allowed (p=1).
 \item{beta1 }{Regression coefficient for Z1}
 \item{beta2 }{Regression coefficient for Z2}
 \item{eta }{Frailty parameter}
-\item{theta }{Copula parameter under the Clayton copula}
-\item{tau }{Kendall's tau corresponding to the copula parameter}
 \item{K1}{Smoothing parameter for TTP}
 \item{K2}{Smoothing parameter for OS}
 \item{g }{M spline coefficients for TTP}
@@ -57,12 +53,10 @@ Currently, only one covariate is allowed (p=1).
 }
 
 \references{
-Emura T*, Nakatochi M, Murotani K, Rondeau V (2015), A joint frailty-copula model between tumour progression and death for meta-analysis,
-under revision, Statistical Methods in Medical Research.
+Rondeau V, Pignon JP, Michiels S (2011). A joint model for dependence between clustered times to tumour progression and deaths: A meta-analysis of chemotherapy in head and neck cancer.
+ Statistical Method in Medical Research, DOI: 10.1177/0962280211425578.
 }
 \author{Takeshi Emura}
-
-
 
 \examples{
 G=5
