@@ -13,10 +13,10 @@ Meta-analysis data for studying the CXCL12 gene expression as a predictive
 \format{
   A data frame with 1003 observations on the following 6 variables.
   \describe{
-    \item{\code{t.event}}{: time to event}
-    \item{\code{event}}{: event indicator}
-    \item{\code{t.death}}{: time to death}
-    \item{\code{death}}{: death indicator}
+    \item{\code{t.event}}{: time to event in days}
+    \item{\code{event}}{: event indicator (1=recurrence, 0=no recurrence)}
+    \item{\code{t.death}}{: time to death in days}
+    \item{\code{death}}{: death indicator (1=death, 0=alive)}
     \item{\code{group}}{: study ID; groud=4, 8, 11, or 14}
     \item{\code{CXCL12}}{: CXCL12 expression}
   }

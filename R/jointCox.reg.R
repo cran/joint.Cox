@@ -1,18 +1,20 @@
 jointCox.reg <-
 function(t.event,event,t.death,death,Z1,Z2,group,
-         alpha=1,p0=rep(0,14),kappa_grid=c(seq(10,1e+17,length=30)),
+         alpha=1,kappa_grid=c(seq(10,1e+17,length=30)),
          LCV_plot=TRUE,RNR_num=10,Adj=500){
 
 T1=t.event
 T2=t.death
 d1=event
 d2=death
+p1=ncol(Z1)
+p2=ncol(Z2)
 
 G_id=as.numeric((levels(factor(group))))
 G=length(G_id)
 
 ########### Summary ###########
-n.event=n.death=n.censor=NULL
+n.event=n.death=n.censor=Z.event=Z.death=NULL
 for(i in G_id){
   Gi=c(group==i)
   n.event=c(n.event,sum(d1[Gi]))
@@ -62,13 +64,14 @@ Omega=matrix(Omega,5,5)/D^5
 
 ############ LCV for K1 ###############
 l1.func=function(phi){
-  beta1=phi[6]
-  g1=exp(  pmin(phi[c(1,2,3,4,5)],500)  ) ## M-spline coefficients ##
+  beta1=phi[(5+1):(5+p1)]
+  g1=exp(  pmin(phi[1:5],500)  ) ## M-spline coefficients ##
   l=-K1*t(g1)%*%Omega%*%g1
   r1=as.vector( M_func(T1)%*%g1 )
   R1=as.vector( I_func(T1)%*%g1 )
-  l=l+sum( d1*(log(r1)+beta1*Z1) )
-  l=l-sum(  pmin( exp(beta1*Z1)*R1, exp(500) )  )
+  bZ1=as.numeric( Z1%*%beta1 )
+  l=l+sum( d1*(log(r1)+bZ1) )
+  l=l-sum(  pmin( exp(bZ1)*R1, exp(500) )  )
   -l  
 }
 
@@ -78,15 +81,15 @@ L1=DF1=NULL
 
 for(k in 1:length(kappa_grid)){
   K1=kappa_grid[k]
-  res1=nlm(l1.func,p=rep(0,6),hessian=TRUE)
-  D1_PL=diag( c(1/exp(res1$estimate[1:5]),1) )
+  res1=nlm(l1.func,p=rep(0,5+p1),hessian=TRUE)
+  D1_PL=diag( c(1/exp(res1$estimate[1:5]),rep(1,p1)) )
   H1_PL=-D1_PL%*%res1$hessian%*%D1_PL
   H1=H1_PL
   H1[1:5,1:5]=H1[1:5,1:5]+2*K1*Omega
   K1=0
   L1[k]=-l1.func(res1$estimate) 
   if( is.na(det(H1_PL))|det(H1_PL)==0 ){DF1[k]=DF_upper}else{
-    DF1[k]=min( max( sum( diag(solve(H1_PL,tol=10^(-40))%*%H1) ), 3) ,DF_upper)
+    DF1[k]=min( max( sum( diag(solve(H1_PL,tol=10^(-40))%*%H1) ), p1+2) ,DF_upper)
   }
 }
 
@@ -94,13 +97,14 @@ K1_est=kappa_grid[L1-DF1==max(L1-DF1)][1]
 
 ############ LCV for K2 ###############
 l2.func=function(phi){
-  beta2=phi[6]
-  g2=exp(  pmin(phi[c(1,2,3,4,5)],500)  ) ## M-spline coefficients ##
+  beta2=phi[(5+1):(5+p2)]
+  g2=exp(  pmin(phi[1:5],500)  ) ## M-spline coefficients ##
   l=-K2*t(g2)%*%Omega%*%g2
   r2=as.vector( M_func(T2)%*%g2 )
   R2=as.vector( I_func(T2)%*%g2 )
-  l=l+sum( d2*(log(r2)+beta2*Z2) )
-  l=l-sum(  pmin( exp(beta2*Z2)*R2, exp(500) )  )
+  bZ2=as.numeric( Z2%*%beta2 )
+  l=l+sum( d2*(log(r2)+bZ2) )
+  l=l-sum(  pmin( exp(bZ2)*R2, exp(500) )  )
   -l  
 }
 
@@ -108,15 +112,15 @@ L2=DF2=NULL
 
 for(k in 1:length(kappa_grid)){
   K2=kappa_grid[k]
-  res2=nlm(l2.func,p=rep(0,6),hessian=TRUE)
-  D2_PL=diag( c(1/exp(res2$estimate[1:5]),1) )
+  res2=nlm(l2.func,p=rep(0,5+p2),hessian=TRUE)
+  D2_PL=diag( c(1/exp(res2$estimate[1:5]),rep(1,p2)) )
   H2_PL=-D2_PL%*%res2$hessian%*%D2_PL
   H2=H2_PL
   H2[1:5,1:5]=H2[1:5,1:5]+2*K2*Omega
   K2=0
   L2[k]=-l2.func(res2$estimate) 
   if( is.na(det(H2_PL))|det(H2_PL)==0 ){DF2[k]=DF_upper}else{
-   DF2[k]=min( max( sum( diag(solve(H2_PL,tol=10^(-40))%*%H2) ), 3), DF_upper)
+   DF2[k]=min( max( sum( diag(solve(H2_PL,tol=10^(-40))%*%H2) ), p2+2), DF_upper)
   }
 }
 
@@ -140,33 +144,34 @@ if(LCV_plot==TRUE){
 ############ Likelihood function ###############
 l.func=function(phi){
   
-  g1=exp(  pmin(phi[c(1,2,3,4,5)],500)  ) ## M-spline coefficients ##
-  g2=exp(  pmin(phi[c(6,7,8,9,10)],500)  ) ## M-spline coefficients ##
+  g1=exp(  pmin(phi[1:5],500)  ) ## M-spline coefficients ##
+  g2=exp(  pmin(phi[6:10],500)  ) ## M-spline coefficients ##
   eta=exp(phi[11])
   theta=min( exp(phi[12]),exp(5) )
-  beta1=phi[13]
-  beta2=phi[14]
+  beta1=phi[(12+1):(12+p1)]
+  beta2=phi[(12+p1+1):(12+p1+p2)]
   
   l=-K1_est*t(g1)%*%Omega%*%g1-K2_est*t(g2)%*%Omega%*%g2
   
   for(i in G_id){
     
     Gi=c(group==i)
-    
+    bZ1=as.vector( as.matrix(Z1[Gi,])%*%beta1 )
+    bZ2=as.vector( as.matrix(Z2[Gi,])%*%beta2 )
     r1=as.vector( M_func(T1[Gi])%*%g1 )
     r2=as.vector( M_func(T2[Gi])%*%g2 )
+    R1=as.vector( I_func(T1[Gi])%*%g1 )
+    R2=as.vector( I_func(T2[Gi])%*%g2 )
     
-    l=l+sum( d1[Gi]*(log(r1)+beta1*Z1[Gi]) )+sum( d2[Gi]*(log(r2)+beta2*Z2[Gi]) )
+    l=l+sum( d1[Gi]*(log(r1)+bZ1) )+sum( d2[Gi]*(log(r2)+bZ2) )
     
     m1=sum(d1[Gi])
     m2=sum(d2[Gi])
     m12=sum(d1[Gi]*d2[Gi])
     
     func1=function(u){
-      R1=as.vector( I_func(T1[Gi])%*%g1 )
-      R2=as.vector( I_func(T2[Gi])%*%g2 )
-      S1=pmin( exp( theta*u%*%t( exp(beta1*Z1[Gi])*R1 ) ), exp(500) )
-      S2=pmin( exp( theta*u^alpha%*%t( exp(beta2*Z2[Gi])*R2 ) ), exp(500) )
+      S1=pmin( exp( theta*u%*%t( exp(bZ1)*R1 ) ), exp(500) )
+      S2=pmin( exp( theta*u^alpha%*%t( exp(bZ2)*R2 ) ), exp(500) )
       A=(S1+S2-1)
       Eta1=apply((S1/A)[,as.logical(d1[Gi]),drop=FALSE],MARGIN=1,FUN=prod)
       Eta2=apply((S2/A)[,as.logical(d2[Gi]),drop=FALSE],MARGIN=1,FUN=prod)
@@ -187,6 +192,8 @@ l.func=function(phi){
   -l  
 }
 
+
+p0=rep(0,12+p1+p2)
 res=nlm(l.func,p=p0,hessian=TRUE)
 ML=-res$minimum
 
@@ -195,7 +202,7 @@ repeat{
   if( (min( eigen(res$hessian)$values )>0)&(res$code==1) ){break}
   R_num=R_num+1
   if(R_num>RNR_num){break}
-  p0_Rand=runif(14,-1,1)
+  p0_Rand=runif(12+p1+p2,-1,1)
   res_Rand=nlm(l.func,p=p0_Rand,hessian=TRUE)
   ML_Rand=-res_Rand$minimum
   if(ML_Rand>ML){res=res_Rand}
@@ -203,41 +210,41 @@ repeat{
 H_PL=res$hessian
 
 temp=(det(H_PL)==0)|is.na(det(H_PL))
-if(temp){V=solve( H_PL+diag(rep(0.0001,14)) )}else{V=solve(H_PL)}
+if(temp){V=solve( H_PL+diag(rep(0.0001,12+p1+p2)) )}else{V=solve(H_PL)}
 
 conv=res$code
 iteration=res$iterations
 ML=-res$minimum
 
-beta1_est=res$est[13]
-beta2_est=res$est[14]
-g_est=exp(res$est[c(1,2,3,4,5)])
-h_est=exp(res$est[c(6,7,8,9,10)])
+beta1_est=res$est[(12+1):(12+p1)]
+beta2_est=res$est[(12+p1+1):(12+p1+p2)]
+g_est=exp(res$est[1:5])
+h_est=exp(res$est[6:10])
 eta_est=exp(res$est[11])
 theta_est=exp(res$est[12])
 tau_est=theta_est/(theta_est+2)
 
-beta1_se=sqrt(V[13,13])
-beta2_se=sqrt(V[14,14])
-eta_se=exp(res$est[11])*sqrt(V[11,11])
-theta_se=exp(res$est[12])*sqrt(V[12,12])
+beta1_se=sqrt(diag(V)[(12+1):(12+p1)])
+beta2_se=sqrt(diag(V)[(12+p1+1):(12+p1+p2)])
+eta_se=exp(res$est[11])*sqrt(diag(V)[11])
+theta_se=exp(res$est[12])*sqrt(diag(V)[12])
 tau_se=2/((theta_est+2)^2)*theta_se
 
-g_var=diag(exp(res$est[c(1,2,3,4,5)]))%*%
-  V[c(1,2,3,4,5),c(1,2,3,4,5)]%*%diag(exp(res$est[c(1,2,3,4,5)]))
-h_var=diag(exp(res$est[c(6,7,8,9,10)]))%*%
-  V[c(6,7,8,9,10),c(6,7,8,9,10)]%*%diag(exp(res$est[c(6,7,8,9,10)]))
+g_var=diag(exp(res$est[1:5]))%*%V[1:5,1:5]%*%diag(exp(res$est[1:5]))
+h_var=diag(exp(res$est[6:10]))%*%V[6:10,6:10]%*%diag(exp(res$est[6:10]))
 
 beta1_res=c(estimate=beta1_est,SE=beta1_se,
-  Low95=beta1_est-1.96*beta1_se,Up95=beta1_est+1.96*beta1_se)
+  Lower=beta1_est-1.96*beta1_se,Upper=beta1_est+1.96*beta1_se)
 beta2_res=c(estimate=beta2_est,SE=beta2_se,
-            Low95=beta2_est-1.96*beta2_se,Up95=beta2_est+1.96*beta2_se)
+            Lower=beta2_est-1.96*beta2_se,Upper=beta2_est+1.96*beta2_se)
 eta_res=c(estimate=eta_est,SE=eta_se,
-          Low95=eta_est*exp(-1.96*sqrt(V[11,11])),Up95=eta_est*exp(1.96*sqrt(V[11,11])))
+          Lower=eta_est*exp(-1.96*sqrt(diag(V)[11])),
+          Upper=eta_est*exp(1.96*sqrt(diag(V)[11])))
 theta_res=c(estimate=theta_est,SE=theta_se,
-            Low95=theta_est*exp(-1.96*sqrt(V[12,12])),Up95=theta_est*exp(1.96*sqrt(V[12,12])))
+            Lower=theta_est*exp(-1.96*sqrt(diag(V)[12])),
+            Upper=theta_est*exp(1.96*sqrt(diag(V)[12])))
 tau_res=c(estimate=tau_est,tau_se=tau_se,
-          Low95=tau_est-1.95*tau_se,Up95=tau_est+1.95*tau_se)
+          Lower=tau_est-1.95*tau_se,Upper=tau_est+1.95*tau_se)
 
 list(count=count,
      beta1=beta1_res,beta2=beta2_res,eta=eta_res,theta=theta_res,

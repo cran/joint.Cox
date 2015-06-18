@@ -2,31 +2,30 @@
 \alias{jointCox.reg}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Penalized Likelihood Estimation under the Joint Cox Models Between TTP 
- and OS for Meta-Analysis
+Penalized Likelihood Estimation under the Joint Cox Models Between Tumour Progression 
+ and Death for Meta-Analysis
 }
 \description{
-Perform regression analyses under a copula-based joint Cox proportional hazards model between TTP and OS for meta-analysis,
+Perform regression analyses under a copula-based joint Cox proportional hazards model between tumour progression and death for meta-analysis,
  which is proposed by Emura et al. (2015).
  The method extends the joint frailty model of Rondeau et al. (2011 Stat Methods Med Res) such that intra-subject 
 dependence is modeled via the Clayton copula.
  The method is applicable for meta-analysis combining several studies or for cluster survival data.
 }
 \usage{
-jointCox.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1, p0 = rep(0, 14),
+jointCox.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
  kappa_grid = c(seq(10, 1e+17, length = 30)), LCV_plot = TRUE, RNR_num = 10, Adj = 500)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{t.event}{a vector object for time-to-progression (TTP)}
+  \item{t.event}{a vector object for time-to-tumour progression (TTP)}
   \item{event}{a vector object for progression indicator (=1 if progression; =0 if not progression)}
   \item{t.death}{a vector object for overall survival (OS), i.e., time-to-death}
   \item{death}{a vector object for death indicator(=1 if death; =0 if not death)}
-  \item{Z1}{a vector object for a covariate associated with TTP}
-  \item{Z2}{a vector object for a covariate associated with OS}
+  \item{Z1}{a matrix object for covariates associated with TTP; ncol(Z1)=the number of covariates}
+  \item{Z2}{a matrix object for covariates associated with OS; ncol(Z2)=the number of covariates}
   \item{group}{a vector object for a group identification number, like 1,2,3....}
   \item{alpha}{A value related to the frailty (e.g., alpha=0 or =1); alpha=1 is default}
-  \item{p0}{A vector of 14 initial values used for maximizing the log-likelihood; detault is rep(0,14)}
   \item{kappa_grid}{a vector for candidate smoothing parameters in likelihood cross-validation (LCV)}
   \item{LCV_plot}{Plot the LCV curves if "TRUE"}
   \item{RNR_num}{The number of randomizations for the ititial p0}
@@ -34,7 +33,7 @@ jointCox.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1, p0 = rep(
 }
 
 \details{
-Currently, only one covariate is allowed (p=1).
+Usually Z1=Z2 as described in Emura et al. (2015).
 }
 \value{
 \item{count }{Count for event occurences}
@@ -106,6 +105,7 @@ for(i in 1:G){
   
 }
 
+Z1=as.matrix(Z1)
 #jointCox.reg(t.event=t.event,event=event,t.death=t.death,
 #                          death=death,Z1=Z1,Z2=Z1,group=group,alpha=alpha_true,
 #                          kappa_grid=seq(10,1000,length=10),LCV_plot=TRUE)
