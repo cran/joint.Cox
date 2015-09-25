@@ -1,1 +1,3 @@
 exportPattern("^[[:alpha:]]+")
+importFrom("graphics", "par", "plot", "points")
+importFrom("stats", "dgamma", "integrate", "nlm", "runif")

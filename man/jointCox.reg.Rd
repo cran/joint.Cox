@@ -57,7 +57,7 @@ Usually Z1=Z2 as described in Emura et al. (2015).
 
 \references{
 Emura T*, Nakatochi M, Murotani K, Rondeau V (2015), A joint frailty-copula model between tumour progression and death for meta-analysis,
-under revision, Statistical Methods in Medical Research.
+ Statistical Methods in Medical Research, doi: 10.1177/0962280215604510
 }
 \author{Takeshi Emura}
 
@@ -118,5 +118,5 @@ Z1=as.matrix(Z1)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
+\keyword{ Estimation }
 \keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

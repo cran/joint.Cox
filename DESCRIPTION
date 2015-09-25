@@ -1,15 +1,16 @@
 Package: joint.Cox
 Type: Package
-Title: Penalized Likelihood Estimation under the Joint Cox Models
-        Between Tumour Progression and Death for Meta-Analysis
-Version: 2.0
-Date: 2015-06-16
+Title: Penalized Likelihood Estimation and Prediction under the Joint
+        Cox Models Between Tumour Progression and Death for
+        Meta-Analysis
+Version: 2.1
+Date: 2015-09-25
 Author: Takeshi Emura
 Maintainer: Takeshi Emura <takeshiemura@gmail.com>
 Description: Perform regression analyses under the joint Cox proportional hazards model between tumour progression and death for meta-analysis.
  The method is applicable for meta-analysis combining several studies or for cluster survival data.
 License: GPL-2
-Packaged: 2015-06-16 10:58:02 UTC; user
+Packaged: 2015-09-25 10:45:33 UTC; user
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2015-06-18 18:27:31
+Date/Publication: 2015-09-25 14:39:26

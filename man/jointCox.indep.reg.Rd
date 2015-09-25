@@ -31,7 +31,7 @@ jointCox.indep.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
   \item{Adj}{Numerical adjustment to prevent overflow; Adj=500 is recommended}
 }
 \details{
-Usually Z1=Z2 as described in Emura et al. (2015).
+Usually Z1=Z2 as described in Rondeau et al. (2011).
 }
 \value{
 \item{count }{Count for event occurences}
@@ -112,5 +112,5 @@ Z1=as.matrix(Z1)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
+\keyword{ Estimation }
 \keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

@@ -2,10 +2,10 @@
 \alias{dataOvarian}
 \docType{data}
 \title{
-Meta-analysis data of ovarian cancer patients
+Meta-analytic data of ovarian cancer patients combining 4 independent studies.
 }
 \description{
-Meta-analysis data for studying the CXCL12 gene expression as a predictive
+Meta-analytic data for studying the CXCL12 gene expression as a predictive
  biomarker of survival in ovarian cancer.
  This is a subset of the curated ovarian data of Ganzfried et al (2013). 
 }
@@ -17,13 +17,13 @@ Meta-analysis data for studying the CXCL12 gene expression as a predictive
     \item{\code{event}}{: event indicator (1=recurrence, 0=no recurrence)}
     \item{\code{t.death}}{: time to death in days}
     \item{\code{death}}{: death indicator (1=death, 0=alive)}
-    \item{\code{group}}{: study ID; groud=4, 8, 11, or 14}
+    \item{\code{group}}{: study ID; group=4, 8, 11, or 14}
     \item{\code{CXCL12}}{: CXCL12 expression}
   }
 }
 \details{
-4 studies are combined (groud=4, 8, 11, and 14).
-}
+4 studies are combined (group=4, 8, 11, and 14). The numbers 4, 8, 11 and 14 corresponds to the IDs 
+from the original data of Ganzfried et al. (2013).}
 \source{
 Ganzfried BF et al. (2013), Curated ovarian data: clinically annotated data for the ovarian cancer transcriptome, Database, Article ID bat013, doi:10.1093/database/bat013.
 }
