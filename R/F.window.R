@@ -1,5 +1,6 @@
-
-F.window <- function(time,width,Z1,Z2,beta1,beta2,eta,theta,alpha,g,h,xi1,xi3){
+F.window <-
+function(time,width,X,Z1,Z2,beta1,beta2,eta,theta,alpha,
+                     g,h,xi1,xi3,Fplot=TRUE){
 
 if(time<xi1){warning("time should be larger than xi1")}
 if(time+width>=xi3){warning("out-of-prediction bound; time+width should be smaller than xi3")}
@@ -40,6 +41,7 @@ bZ1=t(Z1)%*%beta1
 bZ2=t(Z2)%*%beta2
 
 if(time<xi1){R1_t=0}else{R1_t=as.vector( I_func(time)%*%g1 )}
+if(X<xi1){R1_X=0}else{R1_X=as.vector( I_func(X)%*%g1 )}
 if(time<xi1){R2_t=0}else{R2_t=as.vector( I_func(time)%*%g2 )}
 if(time+width<xi1){R2_tw=0}else{R2_tw=as.vector( I_func(time+width)%*%g2 )}
 
@@ -73,9 +75,44 @@ func4=function(u){
 }
 S_0tw=integrate(func4,0.001,10,stop.on.error = FALSE)$value
 
+func5=function(u){
+  S1_X=exp( theta*u%*%t( exp(bZ1)*R1_X ) )
+  S2_t=exp( theta*u^alpha%*%t( exp(bZ2)*R2_t ) )
+  f5=u*S1_X*(S1_X+S2_t-1)^(-1/theta-1)*dgamma(u,shape=1/eta,scale=eta) 
+  pmax(f5,0,na.rm=TRUE)
+}
+S_Xt=integrate(func5,0.001,10,stop.on.error = FALSE)$value
+
+func6=function(u){
+  S1_X=exp( theta*u%*%t( exp(bZ1)*R1_X ) )
+  S2_tw=exp( theta*u^alpha%*%t( exp(bZ2)*R2_tw ) )
+  f6=u*S1_X*(S1_X+S2_tw-1)^(-1/theta-1)*dgamma(u,shape=1/eta,scale=eta) 
+  pmax(f6,0,na.rm=TRUE)
+}
+S_Xtw=integrate(func6,0.001,10,stop.on.error = FALSE)$value
+
 if((S_tw<=0)|(S_t<=0)){F_noevent=1}else{F_noevent=1-S_tw/S_t}
 if((S_0tw<=0)|(S_0t<=0)){F_event=F_noevent}else{F_event=1-(S_0tw)/(S_0t)}
+if((S_Xtw<=0)|(S_Xt<=0)){F_event_at_X=F_noevent}else{F_event_at_X=1-(S_Xtw)/(S_Xt)}
 
-c(t=time,w=width,F_event=F_event,F_noevent=F_noevent)
+if(Fplot==TRUE){
+  num_grid=500
+  x_grid=seq(X,time,length=num_grid)
+  plot(x_grid,rep(0,num_grid),xlim=c(xi1,xi3),ylim=c(0,1),type="l",lwd=4,
+       xlab="t",ylab="Probability of death between t and t+w",col="red")
+  abline(h=0)
+  abline(v=time,col="gray")
+  abline(v=time+width,col="gray")
+  points(X,0,lwd=4,col="red")
+  p_grid=seq(time,time+width,length=num_grid)
+  points(p_grid,rep(F_event_at_X,num_grid),col="red")
+  points(p_grid,rep(F_noevent,num_grid),col="blue")
+  text(X,0.05,"X",cex=1)
+  text(time,0.05,"t",cex=1)
+  text(time+width,0.05,"t+w",cex=1)
+  text(time,F_event_at_X+0.05,"Event occurred at X (< t)",cex=1)
+  text(time,F_noevent+0.05,"Event not occurred before t",cex=1)
+}
 
+c(t=time,w=width,X=X,F_event_at_X=F_event_at_X,F_event=F_event,F_noevent=F_noevent)
 }

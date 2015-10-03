@@ -113,4 +113,4 @@ Z1=as.matrix(Z1)
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ Estimation }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ Frailty }% __ONLY ONE__ keyword per line

@@ -14,8 +14,8 @@ Perform regression analyses under the joint Cox proportional hazards model betwe
 \tabular{ll}{
 Package: \tab joint.Cox\cr
 Type: \tab Package\cr
-Version: \tab 2.1\cr
-Date: \tab 2015-09-25\cr
+Version: \tab 2.2\cr
+Date: \tab 2015-10-03\cr
 License: \tab GPL-2\cr
 }
 }
