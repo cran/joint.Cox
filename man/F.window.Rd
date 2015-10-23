@@ -11,8 +11,8 @@ F.window(time, width, X, Z1, Z2, beta1, beta2, eta, theta, alpha,
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{time}{time}
-  \item{width}{window}
+  \item{time}{prediction time (=t)}
+  \item{width}{length of window (=w)}
   \item{X}{event time occurred < time}
   \item{Z1}{a vector of covariates}
   \item{Z2}{a vector of covariates; usually Z1=Z2}
@@ -36,7 +36,6 @@ Prediction probability of death is calculated given the event status (X<=t or X>
 \item{width }{w}
 \item{X }{X}
 \item{F_event_at_X }{F(t+w|t,X=x,Z1,Z2); usually Z1=Z2; must be x<t}
-\item{F_event }{F(t+w|t,X<=t,Z1,Z2); usually Z1=Z2}
 \item{F_noevent }{F(t+w|t,X>t,Z1,Z2); usually Z1=Z2}
 }
 \references{
@@ -52,36 +51,28 @@ xi3=3
 time=1
 w=1
 ### Both intra-subject and intra-cluster dependence ######
-par(mfrow=c(1,3))
+par(mfrow=c(1,2))
 F.window(time=time,X=0.2,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.5,theta=8,
-         alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
-F.window(time=time,X=0.5,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.5,theta=8,
          alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
 F.window(time=time,X=0.8,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.5,theta=8,
          alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
 
 ### Only intra-cluster dependence ######
-F.window(time=time,X=0.2,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=1,theta=0.0001,
+F.window(time=time,X=0.2,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=1,theta=0,
          alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
-F.window(time=time,X=0.5,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=1,theta=0.0001,
-         alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
-F.window(time=time,X=0.8,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=1,theta=0.0001,
+F.window(time=time,X=0.8,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=1,theta=0,
          alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
 
 ### Only intra-subject dependence ######
 F.window(time=time,X=0.2,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.05,theta=8,
          alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
-F.window(time=time,X=0.5,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.05,theta=8,
-         alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
 F.window(time=time,X=0.8,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.05,theta=8,
          alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
 
 ### Almost no dependence ######
-F.window(time=time,X=0.2,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.005,theta=0.0001,
+F.window(time=time,X=0.2,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.005,theta=0,
          alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
-F.window(time=time,X=0.5,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.005,theta=0.0001,
-         alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
-F.window(time=time,X=0.8,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.005,theta=0.0001,
+F.window(time=time,X=0.8,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.005,theta=0,
          alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
