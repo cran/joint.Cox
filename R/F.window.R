@@ -112,7 +112,7 @@ if(Fplot==TRUE){
   num_grid=500
   x_grid=seq(X,time,length=num_grid)
   plot(x_grid,rep(0,num_grid),xlim=c(xi1,xi3),ylim=c(-0.05,1.05),type="l",lwd=4,
-       xlab="t",ylab="Probability of death in ( t, t+w )",col="red")
+       xlab="time",ylab="Probability of death in ( t, t+w )",col="red")
   polygon(c(time,time+width,time+width,time),c(0,0,1.092,1.092),col=gray(0.95))
   abline(h=0)
   abline(v=time,col="gray")
