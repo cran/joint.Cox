@@ -1,16 +1,16 @@
 Package: joint.Cox
 Type: Package
-Title: Penalized Likelihood Estimation and Prediction under the Joint
-        Cox Models Between Tumour Progression and Death for
-        Meta-Analysis
-Version: 2.4
-Date: 2016-2-24
+Title: Penalized Likelihood Estimation and Dynamic Prediction under the
+        Joint Frailty-Copula Models Between Tumour Progression and
+        Death for Meta-Analysis
+Version: 2.5
+Date: 2016-5-5
 Author: Takeshi Emura
 Maintainer: Takeshi Emura <takeshiemura@gmail.com>
-Description: Perform regression analyses under the joint Cox proportional hazards model between tumour progression and death for meta-analysis.
+Description: Perform the Cox regression and dynamic prediction under the joint frailty-copula model between tumour progression and death for meta-analysis.
  The method is applicable for meta-analysis combining several studies or for cluster survival data.
 License: GPL-2
-Packaged: 2016-02-24 09:56:43 UTC; user
 NeedsCompilation: no
+Packaged: 2016-05-05 09:53:48 UTC; user
 Repository: CRAN
-Date/Publication: 2016-02-24 12:07:10
+Date/Publication: 2016-05-05 16:01:23

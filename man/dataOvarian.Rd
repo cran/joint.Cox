@@ -7,7 +7,8 @@ Meta-analytic data of ovarian cancer patients combining 4 independent studies.
 \description{
 Meta-analytic data for studying the CXCL12 gene expression as a predictive
  biomarker of survival in ovarian cancer.
- This is a subset of the curated ovarian data of Ganzfried et al (2013). 
+ The data is a subset of the curated ovarian data of Ganzfried et al (2013).
+ The data is prepared using "patientselection.config" around May 2015. 
 }
 \usage{data("dataOvarian")}
 \format{
@@ -32,7 +33,7 @@ Ganzfried BF et al. (2013), Curated ovarian data: clinically annotated data for 
 }
 \examples{
 data(dataOvarian)
-GSE17260=dataOvarian[dataOvarian$group==4,] # extract the study GSE17260 
-GSE17260
+study4=dataOvarian[dataOvarian$group==4,] # extract one study
+study4
 }
 \keyword{datasets}

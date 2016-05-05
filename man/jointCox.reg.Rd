@@ -14,7 +14,8 @@ dependence is modeled via the Clayton copula.
 }
 \usage{
 jointCox.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
- kappa_grid = c(seq(10, 1e+17, length = 30)), LCV_plot = TRUE, RNR_num = 10, Adj = 500)
+ kappa_grid = c(seq(10, 1e+17, length = 30)), LCV_plot = TRUE, RNR_num = 10,
+ Adj = 500,Var.mat=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -30,6 +31,7 @@ jointCox.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
   \item{LCV_plot}{Plot the LCV curves if "TRUE"}
   \item{RNR_num}{The number of randomizations for the ititial p0}
   \item{Adj}{Numerical adjustment to prevent overflow; Adj=500 is recommended}
+  \item{Var.mat}{If TRUE, the converged Hessian matrix is given (log-transformed)}
 }
 
 \details{
@@ -42,17 +44,13 @@ Usually Z1=Z2 as described in Emura et al. (2015).
 \item{eta }{Frailty parameter}
 \item{theta }{Copula parameter under the Clayton copula}
 \item{tau }{Kendall's tau corresponding to the copula parameter}
-\item{K1}{Smoothing parameter for TTP}
-\item{K2}{Smoothing parameter for OS}
+\item{LCV1}{Likelihood cross-validation for TTP}
+\item{LCV2}{Likelihood cross-validation for OS}
 \item{g }{M spline coefficients for TTP}
 \item{h }{M spline coefficients for OS}
 \item{g_var }{Variance of M spline coefficients for TTP}
 \item{h_var }{Variance of M spline coefficients for OS}
-\item{convergence_code }{convergence code for "nlm" for maximizing the penalized likelihood}
-\item{iterations }{the number of iterations until convergence}
-\item{Randomiz_num }{the number of randomizing p0}
-\item{gradient }{gradient vector; should be close to 0}
-\item{ML}{Maximized penalized log-likelihood}
+\item{convergence_res }{convergence results for maximizing penalized likelihood}
 }
 
 \references{
@@ -65,14 +63,14 @@ Emura T*, Nakatochi M, Murotani K, Rondeau V (2015), A joint frailty-copula mode
 
 \examples{
 G=5
-N=100
+N=30
 theta_true=2 ## copula parameter ##
 
-beta1_true=1
-beta2_true=1
+beta1_true=2
+beta2_true=2
 r1_true=1
 r2_true=1
-eta_true=0.5
+eta_true=1
 alpha_true=1
 
 t.event=t.death=event=death=Z1=group=NULL
@@ -96,7 +94,7 @@ for(i in 1:G){
     V2=runif(1)
     X_ij=-1/r1_ij*log(1-V1);W=(1-V1)^(-theta_true)
     D_ij=1/theta_true/r2_ij*log(  1-W+W*(1-V2)^(-theta_true/(theta_true+1))  )
-    C_ij=runif(1,min=0,max=5)
+    C_ij=runif(1,min=0,max=20)
     t.event[ij]=min(X_ij,D_ij,C_ij)
     t.death[ij]=min(D_ij,C_ij)
     event[ij]=as.numeric( t.event[ij]==X_ij )
@@ -106,15 +104,11 @@ for(i in 1:G){
 }
 
 Z1=as.matrix(Z1)
+
 #jointCox.reg(t.event=t.event,event=event,t.death=t.death,
-#                          death=death,Z1=Z1,Z2=Z1,group=group,alpha=alpha_true,
-#                          kappa_grid=seq(10,1000,length=10),LCV_plot=TRUE)
-
-#jointCox.indep.reg(t.event=t.event,event=event,t.death=t.death,
 #             death=death,Z1=Z1,Z2=Z1,group=group,alpha=alpha_true,
-#             kappa_grid=seq(10,1000,length=10),LCV_plot=TRUE)
-
-### takes a few minutes to finish ###
+#             kappa_grid=seq(1,50,length=5),LCV_plot=TRUE)
+## wait 1 minute to finish ##
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

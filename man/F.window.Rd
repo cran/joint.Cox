@@ -1,9 +1,9 @@
 \name{F.window}
 \alias{F.window}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Dynamic prediction of death}
+\title{Prediction of death}
 \description{
-Dynamic prediction of death using a joint model
+Dynamic prediction of death using under a joint model
 }
 \usage{
 F.window(time, width, X, Z1, Z2, beta1, beta2, eta, theta, alpha,
@@ -12,7 +12,7 @@ F.window(time, width, X, Z1, Z2, beta1, beta2, eta, theta, alpha,
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{time}{prediction time (=t)}
-  \item{width}{the width of the prediction window (=w)}
+  \item{width}{length of window (=w)}
   \item{X}{event time occurred < time}
   \item{Z1}{a vector of covariates}
   \item{Z2}{a vector of covariates; usually Z1=Z2}
@@ -50,29 +50,10 @@ xi1=0
 xi3=3
 time=1
 w=1
-### Both intra-subject and intra-cluster dependence ######
 par(mfrow=c(1,2))
 F.window(time=time,X=0.2,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.5,theta=8,
          alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
 F.window(time=time,X=0.8,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.5,theta=8,
-         alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
-
-### Only intra-cluster dependence ######
-F.window(time=time,X=0.2,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=1,theta=0,
-         alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
-F.window(time=time,X=0.8,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=1,theta=0,
-         alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
-
-### Only intra-subject dependence ######
-F.window(time=time,X=0.2,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.05,theta=8,
-         alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
-F.window(time=time,X=0.8,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.05,theta=8,
-         alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
-
-### Almost no dependence ######
-F.window(time=time,X=0.2,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.005,theta=0,
-         alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
-F.window(time=time,X=0.8,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.005,theta=0,
          alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

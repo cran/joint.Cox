@@ -13,7 +13,7 @@ Perform regression analyses under a joint Cox proportional hazards model between
 \usage{
 jointCox.indep.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
  kappa_grid = c(seq(10, 1e+17, length = 30)), LCV_plot = TRUE,
- RNR_num = 10, Adj = 500)
+ RNR_num = 10, Adj = 500,Var.mat=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -29,6 +29,7 @@ jointCox.indep.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
   \item{LCV_plot}{Plot the LCV curves if "TRUE"}
   \item{RNR_num}{The number of randomizations for the ititial p0}
   \item{Adj}{Numerical adjustment to prevent overflow; Adj=500 is recommended}
+  \item{Var.mat}{If TRUE, the converged Hessian matrix is given (log-transformed)}
 }
 \details{
 Usually Z1=Z2 as described in Rondeau et al. (2011).
@@ -38,35 +39,32 @@ Usually Z1=Z2 as described in Rondeau et al. (2011).
 \item{beta1 }{Regression coefficient for Z1}
 \item{beta2 }{Regression coefficient for Z2}
 \item{eta }{Frailty parameter}
-\item{K1}{Smoothing parameter for TTP}
-\item{K2}{Smoothing parameter for OS}
+\item{LCV1}{Likelihood cross-validation for TTP}
+\item{LCV2}{Likelihood cross-validation for OS}
 \item{g }{M spline coefficients for TTP}
 \item{h }{M spline coefficients for OS}
 \item{g_var }{Variance of M spline coefficients for TTP}
 \item{h_var }{Variance of M spline coefficients for OS}
-\item{convergence_code }{convergence code for "nlm" for maximizing the penalized likelihood}
-\item{iterations }{the number of iterations until convergence}
-\item{Randomiz_num }{the number of randomizing p0}
+\item{convergence_res }{convergence results for maximizing penalized likelihood}
 \item{gradient }{gradient vector; should be close to 0}
-\item{ML}{Maximized penalized log-likelihood}
 }
 
 \references{
-Rondeau V, Pignon JP, Michiels S (2011). A joint model for dependence between clustered times to tumour progression and deaths: A meta-analysis of chemotherapy in head and neck cancer.
- Statistical Method in Medical Research, DOI: 10.1177/0962280211425578.
+Rondeau V, Pignon JP, Michiels S (2015). A joint model for dependence between clustered times to tumour progression and deaths: A meta-analysis of chemotherapy in head and neck cancer.
+ Statistical Method in Medical Research 24(6):711-729.
 }
 \author{Takeshi Emura}
 
 \examples{
 G=5
-N=100
+N=20
 theta_true=2 ## copula parameter ##
 
-beta1_true=1
-beta2_true=1
+beta1_true=2
+beta2_true=2
 r1_true=1
 r2_true=1
-eta_true=0.5
+eta_true=1
 alpha_true=1
 
 t.event=t.death=event=death=Z1=group=NULL
@@ -90,7 +88,7 @@ for(i in 1:G){
     V2=runif(1)
     X_ij=-1/r1_ij*log(1-V1);W=(1-V1)^(-theta_true)
     D_ij=1/theta_true/r2_ij*log(  1-W+W*(1-V2)^(-theta_true/(theta_true+1))  )
-    C_ij=runif(1,min=0,max=5)
+    C_ij=runif(1,min=0,max=10)
     t.event[ij]=min(X_ij,D_ij,C_ij)
     t.death[ij]=min(D_ij,C_ij)
     event[ij]=as.numeric( t.event[ij]==X_ij )
@@ -100,15 +98,10 @@ for(i in 1:G){
 }
 
 Z1=as.matrix(Z1)
-#jointCox.reg(t.event=t.event,event=event,t.death=t.death,
-#                          death=death,Z1=Z1,Z2=Z1,group=group,alpha=alpha_true,
-#                          kappa_grid=seq(10,1000,length=10),LCV_plot=TRUE)
 
-#jointCox.indep.reg(t.event=t.event,event=event,t.death=t.death,
-#             death=death,Z1=Z1,Z2=Z1,group=group,alpha=alpha_true,
-#             kappa_grid=seq(10,1000,length=10),LCV_plot=TRUE)
-
-### takes a few minutes to finish ###
+jointCox.indep.reg(t.event=t.event,event=event,t.death=t.death,
+             death=death,Z1=Z1,Z2=Z1,group=group,alpha=alpha_true,
+             kappa_grid=seq(10,500,length=10),LCV_plot=TRUE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

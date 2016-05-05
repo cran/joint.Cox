@@ -3,41 +3,12 @@ function(time,width,X,Z1,Z2,beta1,beta2,eta,theta,alpha,
                      g,h,xi1,xi3,Fplot=TRUE){
 
 if(time<xi1){warning("time should be larger than xi1")}
-if(time+width>=xi3){warning("out-of-prediction bound; time+width should be smaller than xi3")}
+if(time+width>xi3){warning("out-of-prediction bound; time+width should be smaller than xi3")}
 if(X>=xi3){
   warning("X should be smaller than xi3; forced to be X=xi3")
   X=xi3
 }
 if(theta<0){warning("in general, theta should be positive or zero")}
-
-########### M-spline matrix #############
-D=(xi3-xi1)/2
-xi2=xi1+D
-
-M_func=function(t){
-  z1=(t-xi1)/D;z2=(t-xi2)/D;z3=(t-xi3)/D
-  
-  M1=-(4*z2^3/D)*(t<xi2)+0*(t>=xi2)
-  M2=(7*z1^3-18*z1^2+12*z1)/2/D*(t<xi2)-z3^3/2/D*(t>=xi2)
-  M3=(-2*z1^3+3*z1^2)/D*(t<xi2)+(2*z2^3-3*z2^2+1)/D*(t>=xi2)
-  M4=z1^3/2/D*(t<xi2)+(-7*z2^3+3*z2^2+3*z2+1)/2/D*(t>=xi2)
-  M5=4*z2^3/D*(t>=xi2)
-  
-  cbind(M1,M2,M3,M4,M5)
-}
-
-########## I-spline matrix ##############
-I_func=function(t){
-  z1=(t-xi1)/D;z2=(t-xi2)/D;z3=(t-xi3)/D
-  
-  I1=(1-z2^4)*(t<xi2)+1*(t>=xi2)
-  I2=( 7/8*z1^4-3*z1^3+3*z1^2 )*(t<xi2)+( 1-z3^4/8 )*(t>=xi2)
-  I3=( -z1^4/2+z1^3 )*(t<xi2)+( 1/2+z2^4/2-z2^3+z2 )*(t>=xi2)
-  I4=( z1^4/8 )*(t<xi2)+( 1/8-7/8*z2^4+1/2*z2^3+3/4*z2^2+1/2*z2 )*(t>=xi2)
-  I5=z2^4*(t>=xi2)
-  
-  cbind(I1,I2,I3,I4,I5)
-}
 
 g1=g
 g2=h
@@ -45,10 +16,10 @@ g2=h
 bZ1=t(Z1)%*%beta1
 bZ2=t(Z2)%*%beta2
 
-if(time<xi1){R1_t=0}else{R1_t=as.vector( I_func(time)%*%g1 )}
-if(X<xi1){R1_X=0}else{R1_X=as.vector( I_func(X)%*%g1 )}
-if(time<xi1){R2_t=0}else{R2_t=as.vector( I_func(time)%*%g2 )}
-if(time+width<xi1){R2_tw=0}else{R2_tw=as.vector( I_func(time+width)%*%g2 )}
+if(time<xi1){R1_t=0}else{R1_t=as.vector( I.spline(time,xi1=xi1,xi3=xi3)%*%g1 )}
+if(X<xi1){R1_X=0}else{R1_X=as.vector( I.spline(X,xi1=xi1,xi3=xi3)%*%g1 )}
+if(time<xi1){R2_t=0}else{R2_t=as.vector( I.spline(time,xi1=xi1,xi3=xi3)%*%g2 )}
+if(time+width<xi1){R2_tw=0}else{R2_tw=as.vector( I.spline(time+width,xi1=xi1,xi3=xi3)%*%g2 )}
 
 #### Marginal survival given frailty ####
 S1_t_func=function(u){  exp( -u%*%t( exp(bZ1)*R1_t ) )  }
@@ -111,7 +82,7 @@ if((S_Xtw<=0)|(S_Xt<=0)){F_event_at_X=F_noevent}else{F_event_at_X=1-(S_Xtw)/(S_X
 if(Fplot==TRUE){
   num_grid=500
   x_grid=seq(X,time,length=num_grid)
-  plot(x_grid,rep(0,num_grid),xlim=c(xi1,xi3),ylim=c(-0.05,1.05),type="l",lwd=4,
+  plot(x_grid,rep(0,num_grid),xlim=c(xi1,xi3),ylim=c(-0.05,1.05),type="l",lwd=3,
        xlab="time",ylab="Probability of death in ( t, t+w )",col="red")
   polygon(c(time,time+width,time+width,time),c(0,0,1.092,1.092),col=gray(0.95))
   abline(h=0)

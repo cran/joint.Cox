@@ -1,7 +1,7 @@
 jointCox.indep.reg <-
 function(t.event,event,t.death,death,Z1,Z2,group,
          alpha=1,kappa_grid=c(seq(10,1e+17,length=30)),
-         LCV_plot=TRUE,RNR_num=10,Adj=500){
+         LCV_plot=TRUE,RNR_num=10,Adj=500,Var.mat=FALSE){
 
 T1=t.event
 T2=t.death
@@ -23,52 +23,23 @@ for(i in G_id){
 }
 count=cbind(G_id,N=table(group),n.event,n.death,n.censor)  
 
-########### M-spline matrix #############
 xi1=min( T1 )
 xi3=max( T2 )
-D=(xi3-xi1)/2
-xi2=xi1+D
-
-M_func=function(t){
-  z1=(t-xi1)/D;z2=(t-xi2)/D;z3=(t-xi3)/D
-  
-  M1=-(4*z2^3/D)*(t<xi2)+0*(t>=xi2)
-  M2=(7*z1^3-18*z1^2+12*z1)/2/D*(t<xi2)-z3^3/2/D*(t>=xi2)
-  M3=(-2*z1^3+3*z1^2)/D*(t<xi2)+(2*z2^3-3*z2^2+1)/D*(t>=xi2)
-  M4=z1^3/2/D*(t<xi2)+(-7*z2^3+3*z2^2+3*z2+1)/2/D*(t>=xi2)
-  M5=4*z2^3/D*(t>=xi2)
-  
-  cbind(M1,M2,M3,M4,M5)
-}
-
-########## I-spline matrix ##############
-I_func=function(t){
-  z1=(t-xi1)/D;z2=(t-xi2)/D;z3=(t-xi3)/D
-  
-  I1=(1-z2^4)*(t<xi2)+1*(t>=xi2)
-  I2=( 7/8*z1^4-3*z1^3+3*z1^2 )*(t<xi2)+( 1-z3^4/8 )*(t>=xi2)
-  I3=( -z1^4/2+z1^3 )*(t<xi2)+( 1/2+z2^4/2-z2^3+z2 )*(t>=xi2)
-  I4=( z1^4/8 )*(t<xi2)+( 1/8-7/8*z2^4+1/2*z2^3+3/4*z2^2+1/2*z2 )*(t>=xi2)
-  I5=z2^4*(t>=xi2)
-  
-  cbind(I1,I2,I3,I4,I5)
-}
-
 ######## Penalization term #########
 Omega=c(192,-132,24,12,0,
         -132,96,-24,-12,12,
         24,-24,24,-24,24,
         12,-12,-24,96,-132,
         0,12,24,-132,192)
-Omega=matrix(Omega,5,5)/D^5
+Omega=matrix(Omega,5,5)/( (xi3-xi1)/2 )^5
 
 ############ LCV for K1 ###############
 l1.func=function(phi){
   beta1=phi[(5+1):(5+p1)]
   g1=exp(  pmin(phi[1:5],500)  ) ## M-spline coefficients ##
   l=-K1*t(g1)%*%Omega%*%g1
-  r1=as.vector( M_func(T1)%*%g1 )
-  R1=as.vector( I_func(T1)%*%g1 )
+  r1=as.vector( M.spline(T1,xi1=xi1,xi3=xi3)%*%g1 )
+  R1=as.vector( I.spline(T1,xi1=xi1,xi3=xi3)%*%g1 )
   bZ1=as.numeric( Z1%*%beta1 )
   l=l+sum( d1*(log(r1)+bZ1) )
   l=l-sum(  pmin( exp(bZ1)*R1, exp(500) )  )
@@ -94,14 +65,15 @@ for(k in 1:length(kappa_grid)){
 }
 
 K1_est=kappa_grid[L1-DF1==max(L1-DF1)][1]
+LCV1_res=c(K1=K1_est,LCV1=max(L1-DF1))
 
 ############ LCV for K2 ###############
 l2.func=function(phi){
   beta2=phi[(5+1):(5+p2)]
   g2=exp(  pmin(phi[1:5],500)  ) ## M-spline coefficients ##
   l=-K2*t(g2)%*%Omega%*%g2
-  r2=as.vector( M_func(T2)%*%g2 )
-  R2=as.vector( I_func(T2)%*%g2 )
+  r2=as.vector( M.spline(T2,xi1=xi1,xi3=xi3)%*%g2 )
+  R2=as.vector( I.spline(T2,xi1=xi1,xi3=xi3)%*%g2 )
   bZ2=as.numeric( Z2%*%beta2 )
   l=l+sum( d2*(log(r2)+bZ2) )
   l=l-sum(  pmin( exp(bZ2)*R2, exp(500) )  )
@@ -125,21 +97,21 @@ for(k in 1:length(kappa_grid)){
 }
 
 K2_est=kappa_grid[L2-DF2==max(L2-DF2)][1]
+LCV2_res=c(K2=K2_est,LCV2=max(L2-DF2))
 
 ########## Plotting LCV ##########
 if(LCV_plot==TRUE){
   par(mfrow=c(1,3))
   plot(kappa_grid,L1,xlab="K1",ylab="logL",type="b",lwd=3)
-  plot(kappa_grid,pmin(DF1,10),xlab="K1",ylab="DF",,type="b",lwd=3)
+  plot(kappa_grid,pmin(DF1,10+p1),xlab="K1",ylab="DF",,type="b",lwd=3)
   plot(kappa_grid,L1-DF1,xlab="K1",ylab="LCV=logL-DF",type="b",lwd=3)
   points(K1_est,max(L1-DF1),xlab="K1",col="red",pch=17,cex=2)
 
   plot(kappa_grid,L2,xlab="K2",ylab="logL",type="b",lwd=3)
-  plot(kappa_grid,pmin(DF2,10),xlab="K2",ylab="DF",type="b",lwd=3)
+  plot(kappa_grid,pmin(DF2,10+p2),xlab="K2",ylab="DF",type="b",lwd=3)
   plot(kappa_grid,L2-DF2,xlab="K2",ylab="LCV=logL-DF",type="b",lwd=3)
   points(K2_est,max(L2-DF2),col="red",pch=17,cex=2)
 }
-
 
 ############ Likelihood function ###############
 l.func=function(phi){
@@ -157,10 +129,10 @@ l.func=function(phi){
     Gi=c(group==i)
     bZ1=as.vector( as.matrix(Z1[Gi,])%*%beta1 )
     bZ2=as.vector( as.matrix(Z2[Gi,])%*%beta2 )
-    r1=as.vector( M_func(T1[Gi])%*%g1 )
-    r2=as.vector( M_func(T2[Gi])%*%g2 )
-    R1=as.vector( I_func(T1[Gi])%*%g1 )
-    R2=as.vector( I_func(T2[Gi])%*%g2 )
+    r1=as.vector( M.spline(T1[Gi],xi1=xi1,xi3=xi3)%*%g1 )
+    r2=as.vector( M.spline(T2[Gi],xi1=xi1,xi3=xi3)%*%g2 )
+    R1=as.vector( I.spline(T1[Gi],xi1=xi1,xi3=xi3)%*%g1 )
+    R2=as.vector( I.spline(T2[Gi],xi1=xi1,xi3=xi3)%*%g2 )
     
     l=l+sum( d1[Gi]*(log(r1)+bZ1) )+sum( d2[Gi]*(log(r2)+bZ2) )
     
@@ -205,9 +177,8 @@ H_PL=res$hessian
 temp=(det(H_PL)==0)|is.na(det(H_PL))
 if(temp){V=solve( H_PL+diag(rep(0.0001,11+p1+p2)) )}else{V=solve(H_PL)}
 
-conv=res$code
-iteration=res$iterations
-ML=-res$minimum
+convergence_res=c(ML=-res$minimum,code=res$code,
+                  Iteration_num=res$iterations,Randomize_num=R_num)
 
 beta1_est=res$est[(11+1):(11+p1)]
 beta2_est=res$est[(11+p1+1):(11+p1+p2)]
@@ -217,10 +188,10 @@ eta_est=exp(res$est[11])
 
 beta1_se=sqrt(diag(V)[(11+1):(11+p1)])
 beta2_se=sqrt(diag(V)[(11+p1+1):(11+p1+p2)])
-eta_se=exp(res$est[11])*sqrt(diag(V)[11])
+eta_se=eta_est*sqrt(diag(V)[11])
 
-g_var=diag(exp(res$est[1:5]))%*%V[1:5,1:5]%*%diag(exp(res$est[1:5]))
-h_var=diag(exp(res$est[6:10]))%*%V[6:10,6:10]%*%diag(exp(res$est[6:10]))
+g_var=diag(g_est)%*%V[1:5,1:5]%*%diag(g_est)
+h_var=diag(h_est)%*%V[6:10,6:10]%*%diag(h_est)
 
 beta1_res=c(estimate=beta1_est,SE=beta1_se,
   Lower=beta1_est-1.96*beta1_se,Upper=beta1_est+1.96*beta1_se)
@@ -230,12 +201,12 @@ eta_res=c(estimate=eta_est,SE=eta_se,
           Lower=eta_est*exp(-1.96*sqrt(diag(V)[11])),
           Upper=eta_est*exp(1.96*sqrt(diag(V)[11])))
 
+if(Var.mat==FALSE){V=NULL}
 list(count=count,
      beta1=beta1_res,beta2=beta2_res,eta=eta_res,
-     K1=K1_est,K2=K2_est,
+     LCV1=LCV1_res,LCV2=LCV2_res,
      g=g_est,h=h_est,g_var=g_var,h_var=h_var,
-     convergence_code=conv,iterations=iteration,Randomiz_num=R_num,
-     gradient=res$gradient,ML=ML)
+     convergence=convergence_res,gradient=res$gradient,V=V)
 }
 
 
