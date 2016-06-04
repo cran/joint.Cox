@@ -8,14 +8,14 @@ Penalized Likelihood Estimation under the Joint Cox Models Between Tumour Progre
 \description{
 Perform regression analyses under a copula-based joint Cox proportional hazards model between tumour progression and death for meta-analysis,
  which is proposed by Emura et al. (2015).
- The method extends the joint frailty model of Rondeau et al. (2011 Stat Methods Med Res) such that intra-subject 
+ The method extends the joint frailty model of Rondeau et al. (2015) such that intra-subject 
 dependence is modeled via the Clayton copula.
  The method is applicable for meta-analysis combining several studies or for cluster survival data.
 }
 \usage{
 jointCox.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
- kappa_grid = c(seq(10, 1e+17, length = 30)), LCV_plot = TRUE, RNR_num = 10,
- Adj = 500,Var.mat=FALSE)
+ kappa_grid = c(seq(10, 1e+17, length = 30)), LCV_plot = TRUE, Randomize_num = 10,
+ Adj = 500,convergence.par=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -29,13 +29,14 @@ jointCox.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
   \item{alpha}{A value related to the frailty (e.g., alpha=0 or =1); alpha=1 is default}
   \item{kappa_grid}{a vector for candidate smoothing parameters in likelihood cross-validation (LCV)}
   \item{LCV_plot}{Plot the LCV curves if "TRUE"}
-  \item{RNR_num}{The number of randomizations for the ititial p0}
+  \item{Randomize_num}{The number of randomizations for the ititial p0}
   \item{Adj}{Numerical adjustment to prevent overflow; Adj=500 is recommended}
-  \item{Var.mat}{If TRUE, the converged Hessian matrix is given (log-transformed)}
+  \item{convergence.par}{If TRUE, the converged estimate, gradient, and Hessian matrix are given (log-transformed)}
 }
 
 \details{
-Usually Z1=Z2 as described in Emura et al. (2015).
+We employ "nlm" routine to maximize the penalized likelihood function with the initial value described in Emura et al. (2015).
+If "nlm" does not converge, then we randomize the initial value by adding uniform random variables (Hu and Emura, 2015).
 }
 \value{
 \item{count }{Count for event occurences}
@@ -50,24 +51,28 @@ Usually Z1=Z2 as described in Emura et al. (2015).
 \item{h }{M spline coefficients for OS}
 \item{g_var }{Variance of M spline coefficients for TTP}
 \item{h_var }{Variance of M spline coefficients for OS}
-\item{convergence_res }{convergence results for maximizing penalized likelihood}
+\item{convergence }{convergence results for maximizing penalized likelihood}
+\item{convergence.parameters }{converged estimate, gradient, and Hessian matrix (log-transformed)}
 }
 
 \references{
 Emura T*, Nakatochi M, Murotani K, Rondeau V (2015), A joint frailty-copula model between tumour progression and death for meta-analysis,
  Statistical Methods in Medical Research, doi: 10.1177/0962280215604510
+
+Hu YH, Emura T* (2015), Maximum likelihood estimation for a special exponential family under random double-truncation,
+ Computational Statistics, 30 (No. 4): 1199-1229
 }
 \author{Takeshi Emura}
 
 
 
 \examples{
-G=5
-N=30
-theta_true=2 ## copula parameter ##
+G=3
+N=10
+theta_true=3 ## copula parameter ##
 
-beta1_true=2
-beta2_true=2
+beta1_true=1
+beta2_true=1
 r1_true=1
 r2_true=1
 eta_true=1
@@ -94,7 +99,8 @@ for(i in 1:G){
     V2=runif(1)
     X_ij=-1/r1_ij*log(1-V1);W=(1-V1)^(-theta_true)
     D_ij=1/theta_true/r2_ij*log(  1-W+W*(1-V2)^(-theta_true/(theta_true+1))  )
-    C_ij=runif(1,min=0,max=20)
+    #C_ij=runif(1,min=0,max=20)
+    C_ij=20
     t.event[ij]=min(X_ij,D_ij,C_ij)
     t.death[ij]=min(D_ij,C_ij)
     event[ij]=as.numeric( t.event[ij]==X_ij )
@@ -107,8 +113,7 @@ Z1=as.matrix(Z1)
 
 #jointCox.reg(t.event=t.event,event=event,t.death=t.death,
 #             death=death,Z1=Z1,Z2=Z1,group=group,alpha=alpha_true,
-#             kappa_grid=seq(1,50,length=5),LCV_plot=TRUE)
-## wait 1 minute to finish ##
+#             kappa_grid=seq(10,5000,length=2),LCV_plot=TRUE,convergence.par=TRUE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

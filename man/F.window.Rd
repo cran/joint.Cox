@@ -39,8 +39,8 @@ Prediction probability of death is calculated given the event status (X<=t or X>
 \item{F_noevent }{F(t+w|t,X>t,Z1,Z2); usually Z1=Z2}
 }
 \references{
-Emura T*, Nakatochi M, Murotani K, Rondeau V (2015), A joint frailty-copula model between tumour progression and death for meta-analysis,
- Statistical Methods in Medical Research, doi: 10.1177/0962280215604510
+Emura T*, Nakatochi M, Matsui S, Michimae H, Rondeau V (2016), Personalized dynamic prediction of death according to tumour progression and high-dimensional genetic factors: 
+joint models for meta-analytic data, submitted for publication
 }
 \author{Takeshi Emura}
 

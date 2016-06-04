@@ -1,7 +1,7 @@
 jointCox.reg <-
 function(t.event,event,t.death,death,Z1,Z2,group,
          alpha=1,kappa_grid=c(seq(10,1e+17,length=30)),
-         LCV_plot=TRUE,RNR_num=10,Adj=500,Var.mat=FALSE){
+         LCV_plot=TRUE,Randomize_num=10,Adj=500,convergence.par=FALSE){
 
 T1=t.event
 T2=t.death
@@ -46,7 +46,7 @@ l1.func=function(phi){
   -l  
 }
 
-DF_upper=20
+DF_upper=18+p1+p2
 
 L1=DF1=NULL
 
@@ -173,18 +173,29 @@ R_num=0
 repeat{
   if( (min( eigen(res$hessian)$values )>0)&(res$code==1) ){break}
   R_num=R_num+1
-  if(R_num>RNR_num){break}
+  if(R_num>Randomize_num){break}
   p0_Rand=runif(12+p1+p2,-1,1)
   res_Rand=nlm(l.func,p=p0_Rand,hessian=TRUE)
   ML_Rand=-res_Rand$minimum
   if(ML_Rand>ML){res=res_Rand}
 }
-H_PL=res$hessian
+H_PL=-res$hessian
 
 temp=(det(H_PL)==0)|is.na(det(H_PL))
-if(temp){V=solve( H_PL+diag(rep(0.0001,12+p1+p2)) )}else{V=solve(H_PL)}
+if(temp){V=solve( -H_PL+diag(rep(0.0001,12+p1+p2)) )}else{V=solve(-H_PL)}
 
-convergence_res=c(ML=-res$minimum,code=res$code,
+D_PL=diag( c(1/exp(res$estimate[1:12]),rep(1,p1+p2)) )
+H_PL=D_PL%*%H_PL%*%D_PL
+H=H_PL
+H[1:5,1:5]=H[1:5,1:5]+2*K1_est*Omega
+H[6:10,6:10]=H[6:10,6:10]+2*K2_est*Omega
+if( is.na(det(H_PL))|det(H_PL)==0 ){DF=DF_upper}else{
+  DF=min( max( sum( diag(solve(H_PL,tol=10^(-40))%*%H) ), p1+p2+2), DF_upper)
+}
+K1_est=K2_est=0
+LCV=-l.func(res$estimate)-DF 
+
+convergence_res=c(ML=-res$minimum,DF=DF,LCV=LCV,code=res$code,
                   Iteration_num=res$iterations,Randomize_num=R_num)
 
 beta1_est=res$est[(12+1):(12+p1)]
@@ -217,10 +228,15 @@ theta_res=c(estimate=theta_est,SE=theta_se,
 tau_res=c(estimate=tau_est,tau_se=tau_se,
           Lower=tau_est-1.96*tau_se,Upper=tau_est+1.96*tau_se)
 
-if(Var.mat==FALSE){V=NULL}
+if(convergence.par==FALSE){convergence.parameters=NULL}else{
+   convergence.parameters=list(log_estimate=res$est,
+                               gradient=-res$gradient,log_var=V)
+}
+
 list(count=count,
      beta1=beta1_res,beta2=beta2_res,eta=eta_res,theta=theta_res,
      tau=tau_res,LCV1=LCV1_res,LCV2=LCV2_res,
      g=g_est,h=h_est,g_var=g_var,h_var=h_var,
-     convergence=convergence_res,gradient=res$gradient,V=V)
+     convergence=convergence_res,convergence.parameters=convergence.parameters
+     )
 }

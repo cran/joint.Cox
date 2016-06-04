@@ -7,8 +7,8 @@ Meta-analytic data of ovarian cancer patients combining 4 independent studies.
 \description{
 Meta-analytic data for studying the CXCL12 gene expression as a predictive
  biomarker of survival in ovarian cancer.
- The data is a subset of the curated ovarian data of Ganzfried et al (2013).
- The data is prepared using "patientselection.config" around May 2015. 
+ The dataset is a subset of the curated ovarian data of Ganzfried et al (2013).
+ We prepared the dataset by using "patientselection.config" in "Curated ovarian data" around May 2015. 
 }
 \usage{data("dataOvarian")}
 \format{
