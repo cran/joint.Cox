@@ -3,7 +3,9 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Prediction of death}
 \description{
-Dynamic prediction of death using under a joint model
+Dynamic prediction of death using a joint frailty-copula model. 
+Probability of death between t and t+w is calculated given a tumour progression time X and covariates Z1 and Z2. 
+If X<=t, the prediction probability is F(t,t+w|X=x, Z1, Z2). If X>t, the prediction probability is F(t,t+w|X>t, Z1, Z2). 
 }
 \usage{
 F.window(time, width, X, Z1, Z2, beta1, beta2, eta, theta, alpha,
@@ -35,12 +37,12 @@ Prediction probability of death is calculated given the event status (X<=t or X>
 \item{time }{t}
 \item{width }{w}
 \item{X }{X}
-\item{F_event_at_X }{F(t+w|t,X=x,Z1,Z2); usually Z1=Z2; must be x<t}
-\item{F_noevent }{F(t+w|t,X>t,Z1,Z2); usually Z1=Z2}
+\item{F_event_at_X }{F(t,t+w|X=x, Z1, Z2)}
+\item{F_noevent }{F(t,t+w|X>t, Z1, Z2)}
 }
 \references{
-Emura T*, Nakatochi M, Matsui S, Michimae H, Rondeau V (2016), Personalized dynamic prediction of death according to tumour progression and high-dimensional genetic factors: 
-joint models for meta-analytic data, submitted for publication
+Emura T*, Nakatochi M, Matsui S, Michimae H, Rondeau V (2016), Personalized dynamic prediction of death according to tumour progression and high-dimensional
+ genetic factors: meta-analysis with a joint model, in revision, Statistical Methods in Medical Research.
 }
 \author{Takeshi Emura}
 
