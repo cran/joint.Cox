@@ -116,9 +116,11 @@ if(LCV_plot==TRUE){
 
 ############ Likelihood function ###############
 l.func=function(phi){
-  
-  g1=exp(  pmin(phi[1:5],500)  ) ## M-spline coefficients ##
-  g2=exp(  pmin(phi[6:10],500)  ) ## M-spline coefficients ##
+
+  g1=exp( pmax( pmin(phi[1:5],500), -500)  ) ## M-spline coefficients ## ver2.8
+  g2=exp( pmax( pmin(phi[6:10],500),-500)  ) ## M-spline coefficients ##
+  #g1=exp(  pmin(phi[1:5],500)  ) ## M-spline coefficients ## ver2.7
+  #g2=exp(  pmin(phi[6:10],500)  ) ## M-spline coefficients ##
   eta=exp(phi[11])
   theta=min( exp(phi[12]),exp(5) )
   beta1=phi[(12+1):(12+p1)]
