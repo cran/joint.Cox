@@ -8,14 +8,14 @@ Penalized Likelihood Estimation and Dynamic Prediction under the Joint Frailty-C
 }
 \description{
 Perform the Cox regression and dynamic prediction under the joint frailty-copula model between tumour progression and death for meta-analysis.
- The method is applicable for meta-analytic data combining several studies. The data should have information on both terminal event time (time-to-death) and non-terminal event time (time-to-tumour progression).
+ The method is applicable for meta-analytic data combining several studies. The data should have information on both terminal event time (e.g., time-to-death) and non-terminal event time (e.g., time-to-tumour progression).
 }
 \details{
 \tabular{ll}{
 Package: \tab joint.Cox\cr
 Type: \tab Package\cr
-Version: \tab 2.8\cr
-Date: \tab 2016-9-30\cr
+Version: \tab 2.9\cr
+Date: \tab 2016-10-22\cr
 License: \tab GPL-2\cr
 }
 }

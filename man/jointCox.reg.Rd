@@ -111,9 +111,9 @@ for(i in 1:G){
 
 Z1=as.matrix(Z1)
 
-#jointCox.reg(t.event=t.event,event=event,t.death=t.death,
-#             death=death,Z1=Z1,Z2=Z1,group=group,alpha=alpha_true,
-#             kappa_grid=seq(10,5000,length=2),LCV_plot=TRUE,convergence.par=TRUE)
+jointCox.reg(t.event=t.event,event=event,t.death=t.death,
+             death=death,Z1=Z1,Z2=Z1,group=group,alpha=alpha_true,
+             kappa_grid=seq(10,5000,length=2),LCV_plot=TRUE,convergence.par=TRUE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

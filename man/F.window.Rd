@@ -31,7 +31,7 @@ F.window(time, width, X, Z1, Z2, beta1, beta2, eta, theta, alpha,
 }
 
 \details{
-Prediction probability of death is calculated given the event status (X<=t or X>t)
+Predicted probability of death is calculated given the event status (X<=t or X>t) and covariates (Z1 and Z2).
 }
 \value{
 \item{time }{t}
@@ -47,16 +47,12 @@ Emura T*, Nakatochi M, Matsui S, Michimae H, Rondeau V (2016), Personalized dyna
 \author{Takeshi Emura}
 
 \examples{
-
-xi1=0
-xi3=3
-time=1
 w=1
 par(mfrow=c(1,2))
-F.window(time=time,X=0.2,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.5,theta=8,
-         alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
-F.window(time=time,X=0.8,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.5,theta=8,
-         alpha=1,g=rep(1,5),h=rep(1,5),xi1=xi1,xi3=xi3)
+F.window(time=1,X=0.2,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.5,theta=8,
+         alpha=1,g=rep(1,5),h=rep(1,5),xi1=0,xi3=3)
+F.window(time=1,X=0.8,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.5,theta=8,
+         alpha=1,g=rep(1,5),h=rep(1,5),xi1=0,xi3=3)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

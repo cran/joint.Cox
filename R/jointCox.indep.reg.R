@@ -60,7 +60,7 @@ for(k in 1:length(kappa_grid)){
   K1=0
   L1[k]=-l1.func(res1$estimate) 
   if( is.na(det(H1_PL))|det(H1_PL)==0 ){DF1[k]=DF_upper}else{
-    DF1[k]=min( max( sum( diag(solve(H1_PL,tol=10^(-40))%*%H1) ), p1+2) ,DF_upper)
+    DF1[k]=min( max( sum( diag(solve(H1_PL,tol=10^(-42))%*%H1) ), p1+2) ,DF_upper)
   }
 }
 
@@ -92,7 +92,7 @@ for(k in 1:length(kappa_grid)){
   K2=0
   L2[k]=-l2.func(res2$estimate) 
   if( is.na(det(H2_PL))|det(H2_PL)==0 ){DF2[k]=DF_upper}else{
-   DF2[k]=min( max( sum( diag(solve(H2_PL,tol=10^(-40))%*%H2) ), p2+2), DF_upper)
+   DF2[k]=min( max( sum( diag(solve(H2_PL,tol=10^(-42))%*%H2) ), p2+2), DF_upper)
   }
 }
 
@@ -177,7 +177,7 @@ repeat{
 H_PL=-res$hessian
 
 temp=(det(H_PL)==0)|is.na(det(H_PL))
-if(temp){V=solve( -H_PL+diag(rep(0.0001,11+p1+p2)) )}else{V=solve(-H_PL)}
+if(temp){V=solve( -H_PL+diag(rep(0.0001,11+p1+p2)) ,tol=10^(-42))}else{V=solve(-H_PL,tol=10^(-42))}
 
 D_PL=diag( c(1/exp(res$estimate[1:11]),rep(1,p1+p2)) )
 H_PL=D_PL%*%H_PL%*%D_PL
@@ -185,7 +185,7 @@ H=H_PL
 H[1:5,1:5]=H[1:5,1:5]+2*K1_est*Omega
 H[6:10,6:10]=H[6:10,6:10]+2*K2_est*Omega
 if( is.na(det(H_PL))|det(H_PL)==0 ){DF=DF_upper}else{
-  DF=min( max( sum( diag(solve(H_PL,tol=10^(-40))%*%H) ), p1+p2+2), DF_upper)
+  DF=min( max( sum( diag(solve(H_PL,tol=10^(-42))%*%H) ), p1+p2+2), DF_upper)
 }
 K1_est=K2_est=0
 LCV=-l.func(res$estimate)-DF 
