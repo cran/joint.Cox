@@ -14,8 +14,8 @@ Perform the Cox regression and dynamic prediction under the joint frailty-copula
 \tabular{ll}{
 Package: \tab joint.Cox\cr
 Type: \tab Package\cr
-Version: \tab 2.9\cr
-Date: \tab 2016-10-22\cr
+Version: \tab 2.10\cr
+Date: \tab 2016-10-30\cr
 License: \tab GPL-2\cr
 }
 }
