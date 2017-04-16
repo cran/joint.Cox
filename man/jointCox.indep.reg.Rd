@@ -39,13 +39,13 @@ If "nlm" does not converge, then we randomize the initial value by adding unifor
 \item{count }{Count for event occurences}
 \item{beta1 }{Regression coefficient for Z1}
 \item{beta2 }{Regression coefficient for Z2}
-\item{eta }{Frailty parameter}
+\item{eta }{Frailty parameter (variance)}
 \item{LCV1}{Likelihood cross-validation for TTP}
 \item{LCV2}{Likelihood cross-validation for OS}
-\item{g }{M spline coefficients for TTP}
-\item{h }{M spline coefficients for OS}
-\item{g_var }{Variance of M spline coefficients for TTP}
-\item{h_var }{Variance of M spline coefficients for OS}
+\item{g }{M-spline coefficients for TTP}
+\item{h }{M-spline coefficients for OS}
+\item{g_var }{Variance of M-spline coefficients for TTP}
+\item{h_var }{Variance of M-spline coefficients for OS}
 \item{convergence }{convergence results for maximizing penalized likelihood}
 \item{convergence.parameters }{converged estimate, gradient, and Hessian matrix (log-transformed)}
 }
@@ -54,10 +54,18 @@ If "nlm" does not converge, then we randomize the initial value by adding unifor
 Rondeau V, Pignon JP, Michiels S (2015). A joint model for dependence between clustered times to tumour progression and deaths: A meta-analysis of chemotherapy in head and neck cancer.
  Statistical Method in Medical Research 24(6):711-729.
 
-Hu YH, Emura T* (2015), Maximum likelihood estimation for a special exponential family under random double-truncation,
+Hu YH, Emura T (2015), Maximum likelihood estimation for a special exponential family under random double-truncation,
  Computational Statistics, 30 (No. 4): 1199-1229
 }
 \author{Takeshi Emura}
+
+\section{Error }{"Error in integrate(func1, 0.001, 10, stop.on.error = FALSE):non-finite function value",
+ an error occurring when the penalized likelihood is maximizad by "nlm". The error frequently
+ occurs during the iterations for maximizing the penalized likelihood. The error is not crucial and can be ignored.}
+ 
+\section{Warning }{"NA/Inf replaced by maximum positive value", an error occurring when the penalized likelihood
+ is maximizad by "nlm". The error frequently occurs during the iterations for maximizing the penalized likelihood.
+ The error is not crucial and can be ignored.}
 
 \examples{
 G=5
@@ -106,6 +114,22 @@ Z1=as.matrix(Z1)
 jointCox.indep.reg(t.event=t.event,event=event,t.death=t.death,
              death=death,Z1=Z1,Z2=Z1,group=group,alpha=alpha_true,
              kappa_grid=seq(10,5000,length=10),LCV_plot=TRUE)
+
+############## Reproduce the results of Emura et al. (2015) #############
+data(dataOvarian)
+t.event=dataOvarian$t.event
+event=dataOvarian$event
+t.death=dataOvarian$t.death
+death=dataOvarian$death
+Z1=as.matrix(dataOvarian$CXCL12)
+group=dataOvarian$group
+alpha_given=0
+kappa_grid=seq(10,1e+17,length=30)
+set.seed(1)
+#jointCox.indep.reg(t.event=t.event,event=event,t.death=t.death,death=death,
+#                 Z1=Z1,Z2=Z1,group=group,alpha=alpha_given,
+#                 kappa_grid=kappa_grid,LCV_plot=TRUE,Adj=500)
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

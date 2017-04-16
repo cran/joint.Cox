@@ -36,4 +36,5 @@ data(dataOvarian)
 study4=dataOvarian[dataOvarian$group==4,] # extract one study
 study4
 }
-\keyword{datasets}
+\keyword{Datasets}
+\keyword{Ovarian cancer}

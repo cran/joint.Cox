@@ -175,4 +175,5 @@ for(j in 1:p){
 data.frame( gene=Symbol[order(P_value)], P=P_value[order(P_value)], 
 coef=round(coef[order(P_value)],3) )
 }
-\keyword{datasets}
+\keyword{Datasets}
+\keyword{Ovarian cancer}

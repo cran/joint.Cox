@@ -3,15 +3,21 @@ Type: Package
 Title: Penalized Likelihood Estimation and Dynamic Prediction under the
         Joint Frailty-Copula Models Between Tumour Progression and
         Death for Meta-Analysis
-Version: 2.10
-Date: 2016-10-30
+Version: 2.11
+Date: 2017-4-16
 Author: Takeshi Emura
 Maintainer: Takeshi Emura <takeshiemura@gmail.com>
-Description: Perform the Cox regression and dynamic prediction under the joint frailty-copula model between tumour progression and death for meta-analysis.
- The method is applicable for meta-analytic data combining several studies. The data should have information on both terminal event time (e.g., time-to-death) and non-terminal event time (e.g., time-to-tumour progression).
+Description: Perform the Cox regression and dynamic prediction methods under
+ the joint frailty-copula model between tumour progression and death for meta-analysis.
+ A penalized likelihood is employed for estimating model parameters, where the baseline hazard functions are approximated by smoothing splines.
+ The methods are applicable for meta-analytic data combining several studies.
+ The methods can analyze data having information on both terminal event time (e.g., time-to-death) and non-terminal event time (e.g., time-to-tumour progression).
+ See Emura et al. (2015) <doi:10.1177/0962280215604510> and
+ Emura et al. (2017) <doi:10.1177/0962280216688032> for details.
+ Survival data from ovarian cancer patients are also available.
 License: GPL-2
 Depends: survival
 NeedsCompilation: no
-Packaged: 2016-10-30 00:40:00 UTC; user
+Packaged: 2017-04-16 02:02:43 UTC; user
 Repository: CRAN
-Date/Publication: 2016-10-30 11:39:33
+Date/Publication: 2017-04-16 07:15:03 UTC

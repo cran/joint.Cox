@@ -26,8 +26,8 @@ Prediction probability of death is calculated without covariates.
 \item{F }{F(t,t+w)}
 }
 \references{
-Emura T*, Nakatochi M, Matsui S, Michimae H, Rondeau V (2016), Personalized dynamic prediction of death according to tumour progression and high-dimensional
- genetic factors: meta-analysis with a joint model, in revision, Statistical Methods in Medical Research.
+Emura T, Nakatochi M, Matsui S, Michimae H, Rondeau V (2017), Personalized dynamic prediction of death according to tumour progression and high-dimensional
+ genetic factors: meta-analysis with a joint model Statistical Methods in Medical Research, doi:10.1177/0962280216688032
 }
 \author{Takeshi Emura}
 
@@ -41,5 +41,5 @@ F.KM(time=time,width=widths,t.death=t.death,death=death)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ prediction }
-\keyword{ dynamic prediction }% __ONLY ONE__ keyword per line
+\keyword{ Prediction }
+\keyword{ Dynamic prediction }% __ONLY ONE__ keyword per line

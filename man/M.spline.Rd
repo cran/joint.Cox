@@ -20,7 +20,7 @@ The "time" argument is a vector satisfying the contraints xi1<=time<=xi3. Otherw
 \item{NULL }{M-Spline bases (5 bases) evaluated at "time".}
 }
 \references{
-Supplementary Material to: Emura T*, Nakatochi M, Murotani K, Rondeau V (2015), A joint frailty-copula model between tumour progression and death for meta-analysis,
+Supplementary Material to: Emura T, Nakatochi M, Murotani K, Rondeau V (2015), A joint frailty-copula model between tumour progression and death for meta-analysis,
  Statistical Methods in Medical Research, doi: 10.1177/0962280215604510
 }
 \author{Takeshi Emura}

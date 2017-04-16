@@ -41,8 +41,8 @@ Predicted probability of death is calculated given the event status (X<=t or X>t
 \item{F_noevent }{F(t,t+w|X>t, Z1, Z2)}
 }
 \references{
-Emura T*, Nakatochi M, Matsui S, Michimae H, Rondeau V (2016), Personalized dynamic prediction of death according to tumour progression and high-dimensional
- genetic factors: meta-analysis with a joint model, in revision, Statistical Methods in Medical Research.
+Emura T, Nakatochi M, Matsui S, Michimae H, Rondeau V (2017), Personalized dynamic prediction of death according to tumour progression and high-dimensional
+ genetic factors: meta-analysis with a joint model Statistical Methods in Medical Research, doi:10.1177/0962280216688032
 }
 \author{Takeshi Emura}
 
@@ -56,5 +56,5 @@ F.window(time=1,X=0.8,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.5,theta=8,
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ prediction }
-\keyword{ dynamic prediction }% __ONLY ONE__ keyword per line
+\keyword{ Prediction }
+\keyword{ Dynamic prediction }% __ONLY ONE__ keyword per line
