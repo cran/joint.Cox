@@ -60,12 +60,12 @@ Hu YH, Emura T (2015), Maximum likelihood estimation for a special exponential f
 \author{Takeshi Emura}
 
 \section{Error }{"Error in integrate(func1, 0.001, 10, stop.on.error = FALSE):non-finite function value",
- an error occurring when the penalized likelihood is maximizad by "nlm". The error frequently
- occurs during the iterations for maximizing the penalized likelihood. The error is not crucial and can be ignored.}
+ an error occurring when the penalized likelihood is maximizad by "nlm". The error may frequently
+ occur during the iterations for maximizing the penalized likelihood, but is not crucial (can simply be ignored).}
  
 \section{Warning }{"NA/Inf replaced by maximum positive value", an error occurring when the penalized likelihood
- is maximizad by "nlm". The error frequently occurs during the iterations for maximizing the penalized likelihood.
- The error is not crucial and can be ignored.}
+ is maximizad by "nlm". The error frequently occurs during the iterations for maximizing the penalized likelihood,
+ but is not crucial (can simply be ignored).}
 
 \examples{
 G=5

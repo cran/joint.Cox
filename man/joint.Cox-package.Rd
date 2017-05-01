@@ -18,8 +18,8 @@ Perform the Cox regression and dynamic prediction methods under the joint frailt
 \tabular{ll}{
 Package: \tab joint.Cox\cr
 Type: \tab Package\cr
-Version: \tab 2.11\cr
-Date: \tab 2017-4-16\cr
+Version: \tab 2.12\cr
+Date: \tab 2017-5-1\cr
 License: \tab GPL-2\cr
 }
 }

@@ -18,16 +18,16 @@ n.event=tapply(d1, group, FUN=sum)
 n.death=tapply(d2, group, FUN=sum)
 n.censor=tapply(1-d2, group, FUN=sum)
 count=cbind(table(group),n.event,n.death,n.censor)  
-colnames(count)=c("No. of samples","No. of events","No. of deaths","No. of censors")
+colnames(count)=c("No.of samples","No.of events","No.of deaths","No.of censors")
 
 xi1=min( T1 )
 xi3=max( T2 )
 
 ######## Choose smoothing parameters K1 and K2 ##########
 res1=splineCox.reg(t.event,event,Z1,xi1=xi1,xi3=xi3,
-                   kappa_grid=kappa_grid,LCV_plot=TRUE)
+                   kappa_grid=kappa_grid,LCV_plot=LCV_plot)
 res2=splineCox.reg(t.death,death,Z2,xi1=xi1,xi3=xi3,
-                   kappa_grid=kappa_grid,LCV_plot=TRUE)
+                   kappa_grid=kappa_grid,LCV_plot=LCV_plot)
 
 K1_est=res1$kappa
 LCV1_res=c(K1=K1_est,LCV1=res1$LCV)
@@ -44,32 +44,32 @@ Omega=matrix(Omega,5,5)/( (xi3-xi1)/2 )^5
 ############ Likelihood function ###############
 l.func=function(phi){
   
-  g1=exp( pmax( pmin(phi[1:5],500), -500)  ) ## M-spline coefficients ## ver2.8
-  g2=exp( pmax( pmin(phi[6:10],500),-500)  ) ## M-spline coefficients ##
+  g1=exp( pmax( pmin(phi[1:5],500), -500)  )
+  g2=exp( pmax( pmin(phi[6:10],500),-500)  )
   eta=exp(phi[11])
   beta1=phi[(11+1):(11+p1)]
   beta2=phi[(11+p1+1):(11+p1+p2)]
   
   l=-K1_est*t(g1)%*%Omega%*%g1-K2_est*t(g2)%*%Omega%*%g2
-    
+  bZ1=as.vector( as.matrix(Z1)%*%beta1 )
+  bZ2=as.vector( as.matrix(Z2)%*%beta2 )
+  r1=as.vector( M.spline(T1,xi1=xi1,xi3=xi3)%*%g1 )
+  r2=as.vector( M.spline(T2,xi1=xi1,xi3=xi3)%*%g2 )
+  R1=as.vector( I.spline(T1,xi1=xi1,xi3=xi3)%*%g1 )
+  R2=as.vector( I.spline(T2,xi1=xi1,xi3=xi3)%*%g2 )
+  l=l+sum( d1*(log(r1)+bZ1) )+sum( d2*(log(r2)+bZ2) )
+  
   for(i in G_id){
     
     Gi=c(group==i)
-    bZ1=as.vector( as.matrix(Z1[Gi,])%*%beta1 )
-    bZ2=as.vector( as.matrix(Z2[Gi,])%*%beta2 )
-    r1=as.vector( M.spline(T1[Gi],xi1=xi1,xi3=xi3)%*%g1 )
-    r2=as.vector( M.spline(T2[Gi],xi1=xi1,xi3=xi3)%*%g2 )
-    R1=as.vector( I.spline(T1[Gi],xi1=xi1,xi3=xi3)%*%g1 )
-    R2=as.vector( I.spline(T2[Gi],xi1=xi1,xi3=xi3)%*%g2 )
-    
-    l=l+sum( d1[Gi]*(log(r1)+bZ1) )+sum( d2[Gi]*(log(r2)+bZ2) )
-    
     m1=sum(d1[Gi])
     m2=sum(d2[Gi])
-      
+    EZ1=exp(bZ1[Gi])*R1[Gi]
+    EZ2=exp(bZ2[Gi])*R2[Gi]
+    
     func1=function(u){
-      uR1=rowSums( u%*%t( exp(bZ1)*R1 ) ) 
-      uR2=rowSums( (u^alpha)%*%t( exp(bZ2)*R2 ) )
+      uR1=rowSums( u%*%t( EZ1 ) ) 
+      uR2=rowSums( (u^alpha)%*%t( EZ2 ) )
       u^(m1+alpha*m2)*exp(-uR1-uR2+Adj)*dgamma(u,shape=1/eta,scale=eta)
     }
     
@@ -88,7 +88,7 @@ l.func=function(phi){
 
 p0=rep(0,11+p1+p2)
 res=nlm(l.func,p=p0,hessian=TRUE)
-ML=-res$minimum
+MPL=-res$minimum
 
 R_num=0
 repeat{
@@ -97,8 +97,11 @@ repeat{
   R_num=R_num+1
   p0_Rand=runif(11+p1+p2,-1,1)
   res_Rand=nlm(l.func,p=p0_Rand,hessian=TRUE)
-  ML_Rand=-res_Rand$minimum
-  if(ML_Rand>ML){res=res_Rand}
+  MPL_Rand=-res_Rand$minimum
+  if(MPL_Rand>MPL){
+    res=res_Rand
+    MPL=-res$minimum
+  }
 }
 H_PL=-res$hessian
 DF_upper=18+p1+p2
@@ -117,8 +120,8 @@ if( is.na(det(H_PL))|det(H_PL)==0 ){DF=DF_upper}else{
 K1_est=K2_est=0
 LCV=-l.func(res$estimate)-DF 
 
-convergence_res=c(ML=-res$minimum,DF=DF,LCV=LCV,code=res$code,
-                  Iteration_num=res$iterations,Randomize_num=R_num)
+convergence_res=c(MPL=MPL,DF=DF,LCV=LCV,code=res$code,
+            No.of.iterations=res$iterations,No.of.randomizations=R_num)
 
 beta1_est=res$est[(11+1):(11+p1)]
 beta2_est=res$est[(11+p1+1):(11+p1+p2)]
