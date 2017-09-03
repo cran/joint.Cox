@@ -68,53 +68,6 @@ Hu YH, Emura T (2015), Maximum likelihood estimation for a special exponential f
  but is not crucial (can simply be ignored).}
 
 \examples{
-G=5
-N=20
-theta_true=2 ## copula parameter ##
-
-beta1_true=2
-beta2_true=2
-r1_true=1
-r2_true=1
-eta_true=1
-alpha_true=1
-
-t.event=t.death=event=death=Z1=group=NULL
-
-ij=0
-
-set.seed(1)
-
-for(i in 1:G){
-  
-  u_i=rgamma(1,shape=1/eta_true,scale=eta_true)
-  for(j in 1:N){
-    
-    ij=ij+1
-    
-    group[ij]=i
-    Z1[ij]=runif(1)
-    r1_ij=r1_true*u_i*exp(beta1_true*Z1[ij])
-    r2_ij=r2_true*(u_i^alpha_true)*exp(beta2_true*Z1[ij])
-    V1=runif(1)
-    V2=runif(1)
-    X_ij=-1/r1_ij*log(1-V1);W=(1-V1)^(-theta_true)
-    D_ij=1/theta_true/r2_ij*log(  1-W+W*(1-V2)^(-theta_true/(theta_true+1))  )
-    C_ij=runif(1,min=0,max=10)
-    t.event[ij]=min(X_ij,D_ij,C_ij)
-    t.death[ij]=min(D_ij,C_ij)
-    event[ij]=as.numeric( t.event[ij]==X_ij )
-    death[ij]=as.numeric( t.death[ij]==D_ij )
-  }
-  
-}
-
-Z1=as.matrix(Z1)
-
-jointCox.indep.reg(t.event=t.event,event=event,t.death=t.death,
-             death=death,Z1=Z1,Z2=Z1,group=group,alpha=alpha_true,
-             kappa_grid=seq(10,5000,length=10),LCV_plot=TRUE)
-
 ############## Reproduce the results of Emura et al. (2015) #############
 data(dataOvarian)
 t.event=dataOvarian$t.event

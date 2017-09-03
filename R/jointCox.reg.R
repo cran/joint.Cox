@@ -143,7 +143,10 @@ beta1_se=sqrt(diag(V)[(12+1):(12+p1)])
 beta2_se=sqrt(diag(V)[(12+p1+1):(12+p1+p2)])
 eta_se=eta_est*sqrt(diag(V)[11])
 theta_se=theta_est*sqrt(diag(V)[12])
-tau_se=sqrt(2)/(theta_est+2)*theta_se
+tau_se=2/((theta_est+2)^2)*theta_se
+
+theta_Lower=theta_est*exp(-1.96*sqrt(diag(V)[12]))
+theta_Upper=theta_est*exp(1.96*sqrt(diag(V)[12]))
 
 g_var=diag(g_est)%*%V[1:5,1:5]%*%diag(g_est)
 h_var=diag(h_est)%*%V[6:10,6:10]%*%diag(h_est)
@@ -155,15 +158,12 @@ beta2_res=c(estimate=beta2_est,SE=beta2_se,
 eta_res=c(estimate=eta_est,SE=eta_se,
           Lower=eta_est*exp(-1.96*sqrt(diag(V)[11])),
           Upper=eta_est*exp(1.96*sqrt(diag(V)[11])))
-theta_res=c(estimate=theta_est,SE=theta_se,
-            Lower=theta_est*exp(-1.96*sqrt(diag(V)[12])),
-            Upper=theta_est*exp(1.96*sqrt(diag(V)[12])))
+theta_res=c(estimate=theta_est,SE=theta_se,Lower=theta_Lower,Upper=theta_Upper)
 tau_res=c(estimate=tau_est,tau_se=tau_se,
-          Lower=tau_est-1.96*tau_se,Upper=tau_est+1.96*tau_se)
+          Lower=theta_Lower/(theta_Lower+2),Upper=theta_Upper/(theta_Upper+2))
 
 if(convergence.par==FALSE){convergence.parameters=NULL}else{
-   convergence.parameters=list(log_estimate=res$est,
-                               gradient=-res$gradient,log_var=V)
+   convergence.parameters=list(log_estimate=res$est,gradient=-res$gradient,log_var=V)
 }
 
 list(count=count,
