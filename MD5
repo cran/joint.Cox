@@ -1,4 +1,4 @@
-ea1afdeff3e8f39f01f98bedbb9eedb6 *DESCRIPTION
+4c58c4504c8093b7005914bcfefcda09 *DESCRIPTION
 49f563392261266c3fbf46b26cc0f257 *NAMESPACE
 6f156b46fb493b93088a1a1178acfa87 *R/F.KM.R
 257af7b75f782245f27c04bc51d7c6ce *R/F.prediction.R
@@ -22,7 +22,7 @@ b557f7681532399013e2cb9b6f3f72cb *man/I.spline.Rd
 b6b8a57f1f77f15805bc050577125245 *man/dataOvarian.Rd
 6a25e32089f7c4e3efc3973952cd1e67 *man/dataOvarian1.Rd
 0cea3e02c4a7f040f5823c38648d93f7 *man/dataOvarian2.Rd
-58ea48b21ae96ac91ffefa885ba80a95 *man/joint.Cox-package.Rd
+bfec00b65c3d959b7489a1f405e03770 *man/joint.Cox-package.Rd
 0a90c57d369eabd5076519db984fe541 *man/jointCox.indep.reg.Rd
 c0fe3bcf5813057be5ed35769615bcdb *man/jointCox.reg.Rd
-3e75a0488cbf1f6bd13ad46f8b2a3d58 *man/splineCox.reg.Rd
+a89e1eb94ca985018dd8eb440e218ca5 *man/splineCox.reg.Rd
