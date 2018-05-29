@@ -1,15 +1,15 @@
-\name{F.window}
-\alias{F.window}
+\name{F.window.Weibull}
+\alias{F.window.Weibull}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Dynamic prediction of death under the joint frailty-copula model}
+\title{Dynamic prediction of death under the joint frailty-copula model (the Weibull baseline hazard functions) }
 \description{
 Dynamic prediction of death using a joint frailty-copula model. 
 Probability of death between t and t+w is calculated given a tumour progression time X and covariates Z1 and Z2. 
 If X<=t, the prediction probability is F(t,t+w|X=x, Z1, Z2). If X>t, the prediction probability is F(t,t+w|X>t, Z1, Z2). 
 }
 \usage{
-F.window(time, width, X, Z1, Z2, beta1, beta2, eta, theta, alpha,
- g, h, xi1, xi3, Fplot = TRUE)
+F.window.Weibull(time, width, X, Z1, Z2, beta1, beta2, eta, theta, alpha, 
+                  scale1, shape1,scale2,shape2, xi1, xi3, Fplot = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -23,8 +23,10 @@ F.window(time, width, X, Z1, Z2, beta1, beta2, eta, theta, alpha,
   \item{eta}{frailty variance}
   \item{theta}{copula parameter}
   \item{alpha}{parameter related to frailty; usually alpha=1}
-  \item{g}{parameters related to the baseline hazard for progression}
-  \item{h}{parameters related to the baseline hazard for death}
+  \item{scale1}{scale parameter related to the baseline hazard for progression}
+  \item{shape1}{shape parameter related to the baseline hazard for progression}
+  \item{scale2}{scale parameter related to the baseline hazard for death}
+  \item{shape2}{shape parameter related to the baseline hazard for death}
   \item{xi1}{lower bound for time to event}
   \item{xi3}{upper bound for time to death}
   \item{Fplot}{if FALSE, the plot is not shown}
@@ -44,15 +46,15 @@ Predicted probability of death is calculated given the event status (X<=t or X>t
 Emura T, Nakatochi M, Matsui S, Michimae H, Rondeau V (2017), Personalized dynamic prediction of death according to tumour progression and high-dimensional
  genetic factors: meta-analysis with a joint model Statistical Methods in Medical Research, doi:10.1177/0962280216688032
 }
-\author{Takeshi Emura}
+\author{Sayaka Shinohara, Takeshi Emura}
 
 \examples{
 w=1
 par(mfrow=c(1,2))
-F.window(time=1,X=0.2,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.5,theta=8,
-         alpha=1,g=rep(1,5),h=rep(1,5),xi1=0,xi3=3)
-F.window(time=1,X=0.8,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.5,theta=8,
-         alpha=1,g=rep(1,5),h=rep(1,5),xi1=0,xi3=3)
+F.window.Weibull(time=1,X=0.2,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.5,theta=8,
+                 alpha=1,scale1=1,shape1=1,scale2=1,shape2=1,xi1=0,xi3=3)
+F.window.Weibull(time=1,X=0.8,width=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.5,theta=8,
+                 alpha=1,scale1=1,shape1=1,scale2=1,shape2=1,xi1=0,xi3=3)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

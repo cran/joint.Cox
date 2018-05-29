@@ -1,7 +1,7 @@
 \name{F.windows}
 \alias{F.windows}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Prediction of death}
+\title{Dynamic prediction of death under the joint frailty-copula model}
 \description{
 Dynamic prediction of death using a joint frailty-copula model. 
 Probability of death between t and t+w is calculated given a tumour progression time X and covariates Z1 and Z2. 
