@@ -3,8 +3,8 @@ Type: Package
 Title: Penalized Likelihood Estimation and Dynamic Prediction under the
         Joint Frailty-Copula Models Between Tumour Progression and
         Death for Meta-Analysis
-Version: 2.15
-Date: 2018-5-29
+Version: 2.16
+Date: 2018-7-13
 Author: Takeshi Emura
 Maintainer: Takeshi Emura <takeshiemura@gmail.com>
 Description: Perform the Cox regression and dynamic prediction methods under
@@ -18,6 +18,6 @@ Description: Perform the Cox regression and dynamic prediction methods under
 License: GPL-2
 Depends: survival
 NeedsCompilation: no
-Packaged: 2018-05-29 04:26:10 UTC; user
+Packaged: 2018-07-13 09:48:18 UTC; user
 Repository: CRAN
-Date/Publication: 2018-05-29 05:12:55 UTC
+Date/Publication: 2018-07-13 10:00:03 UTC
