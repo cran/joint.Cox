@@ -12,21 +12,22 @@ Perform regression analyses under a joint Cox proportional hazards model between
 }
 \usage{
 jointCox.indep.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
- kappa_grid = c(seq(10, 1e+17, length = 30)), LCV_plot = TRUE,
- Randomize_num = 10, Adj = 500,convergence.par=FALSE)
+ kappa1 = c(seq(10, 1e+17, length = 30)), kappa2 = c(seq(10, 1e+17, length = 30)),
+ LCV.plot = TRUE,Randomize_num = 10, Adj = 500,convergence.par=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
- \item{t.event}{a vector object for time-to-tumour progression (TTP)}
-  \item{event}{a vector object for progression indicator (=1 if progression; =0 if not progression)}
-  \item{t.death}{a vector object for overall survival (OS), i.e., time-to-death}
-  \item{death}{a vector object for death indicator(=1 if death; =0 if not death)}
-  \item{Z1}{a matrix object for covariates associated with TTP; ncol(Z1)=the number of covariates}
-  \item{Z2}{a matrix object for covariates associated with OS; ncol(Z2)=the number of covariates}
-  \item{group}{a vector object for a group identification number, like 1,2,3....}
+ \item{t.event}{a vector for time-to-tumour progression (TTP)}
+  \item{event}{a vector for progression indicator (=1 if progression; =0 if not progression)}
+  \item{t.death}{a vector for overall survival (OS), i.e., time-to-death}
+  \item{death}{a vector for death indicator(=1 if death; =0 if not death)}
+  \item{Z1}{a matrix for covariates associated with TTP; ncol(Z1)=the number of covariates}
+  \item{Z2}{a matrix for covariates associated with OS; ncol(Z2)=the number of covariates}
+  \item{group}{a vector for group identification numbers, like 1,2,3....}
   \item{alpha}{A value related to the frailty (e.g., alpha=0 or =1); alpha=1 is default}
-  \item{kappa_grid}{a vector for candidate smoothing parameters in likelihood cross-validation (LCV)}
-  \item{LCV_plot}{Plot the LCV curves if "TRUE"}
+  \item{kappa1}{a vector for candidate smoothing parameters}
+  \item{kappa2}{a vector for candidate smoothing parameters}
+  \item{LCV.plot}{Plot the LCV curves if "TRUE"}
   \item{Randomize_num}{The number of randomizations for the ititial p0}
   \item{Adj}{Numerical adjustment to prevent overflow; Adj=500 is recommended}
   \item{convergence.par}{If TRUE, the converged estimate, gradient, and Hessian matrix are given (log-transformed)}
@@ -74,14 +75,14 @@ t.event=dataOvarian$t.event
 event=dataOvarian$event
 t.death=dataOvarian$t.death
 death=dataOvarian$death
-Z1=as.matrix(dataOvarian$CXCL12)
+Z1=dataOvarian$CXCL12
 group=dataOvarian$group
 alpha_given=0
 kappa_grid=seq(10,1e+17,length=30)
 set.seed(1)
 #jointCox.indep.reg(t.event=t.event,event=event,t.death=t.death,death=death,
 #                 Z1=Z1,Z2=Z1,group=group,alpha=alpha_given,
-#                 kappa_grid=kappa_grid,LCV_plot=TRUE,Adj=500)
+#                 kappa1=kappa_grid,kappa2=kappa_grid,LCV.plot=TRUE,Adj=500)
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

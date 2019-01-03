@@ -1,9 +1,13 @@
-cmprskCox.reg = function (t.event,event1,event2,Z1,Z2,group,theta,alpha = 1,
-                          kappa_grid = c(seq(10,1e+17,length = 30)),LCV_plot = TRUE,
-                          Randomize_num = 10,Adj = 500,convergence.par = FALSE) {
+cmprskCox.reg <-
+  function (t.event,event1,event2,Z1,Z2,group,theta,alpha = 1,
+            kappa1=c(seq(10,1e+17,length=30)),
+            kappa2=c(seq(10,1e+17,length=30)),
+            LCV.plot = TRUE,Randomize_num = 10,Adj = 500,convergence.par = FALSE){
   
   d1 = event1
   d2 = event2
+  Z1=as.matrix(Z1)
+  Z2=as.matrix(Z2)
   p1 = ncol(Z1)
   p2 = ncol(Z2)
   G_id = as.numeric((levels(factor(group))))
@@ -18,9 +22,9 @@ cmprskCox.reg = function (t.event,event1,event2,Z1,Z2,group,theta,alpha = 1,
   xi1 = min(t.event)
   xi3 = max(t.event)
   res1 = splineCox.reg(t.event,event1,Z1,xi1 = xi1,xi3 = xi3, 
-                       kappa_grid = kappa_grid,LCV_plot = LCV_plot)
+                       kappa=kappa2,LCV.plot = LCV.plot)
   res2 = splineCox.reg(t.event,event2,Z2,xi1 = xi1,xi3 = xi3, 
-                       kappa_grid = kappa_grid,LCV_plot = LCV_plot)
+                       kappa=kappa2,LCV.plot = LCV.plot)
   
   K1_est = res1$kappa
   LCV1_res = c(K1 = K1_est,LCV1 = res1$LCV)

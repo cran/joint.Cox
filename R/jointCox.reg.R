@@ -1,12 +1,15 @@
 jointCox.reg <-
-function(t.event,event,t.death,death,Z1,Z2,group,
-         alpha=1,kappa_grid=c(seq(10,1e+17,length=30)),
-         LCV_plot=TRUE,Randomize_num=10,Adj=500,convergence.par=FALSE){
+function(t.event,event,t.death,death,Z1,Z2,group,alpha=1,
+         kappa1=c(seq(10,1e+17,length=30)),
+         kappa2=c(seq(10,1e+17,length=30)),
+         LCV.plot=TRUE,Randomize_num=10,Adj=500,convergence.par=FALSE){
 
 T1=t.event
 T2=t.death
 d1=event
 d2=death
+Z1=as.matrix(Z1)
+Z2=as.matrix(Z2)
 p1=ncol(Z1)
 p2=ncol(Z2)
 
@@ -25,9 +28,9 @@ xi3=max( T2 )
 
 ######## Choose smoothing parameters K1 and K2 ##########
 res1=splineCox.reg(t.event,event,Z1,xi1=xi1,xi3=xi3,
-              kappa_grid=kappa_grid,LCV_plot=LCV_plot)
+              kappa=kappa1,LCV.plot=LCV.plot)
 res2=splineCox.reg(t.death,death,Z2,xi1=xi1,xi3=xi3,
-              kappa_grid=kappa_grid,LCV_plot=LCV_plot)
+              kappa=kappa2,LCV.plot=LCV.plot)
 
 K1_est=res1$kappa
 LCV1_res=c(K1=K1_est,LCV1=res1$LCV)
@@ -52,8 +55,8 @@ l.func=function(phi){
   beta2=phi[(12+p1+1):(12+p1+p2)]
   
   l=-K1_est*t(g1)%*%Omega%*%g1-K2_est*t(g2)%*%Omega%*%g2
-  bZ1=as.vector( as.matrix(Z1)%*%beta1 )
-  bZ2=as.vector( as.matrix(Z2)%*%beta2 )
+  bZ1=as.vector( Z1%*%beta1 )
+  bZ2=as.vector( Z2%*%beta2 )
   r1=as.vector( M.spline(T1,xi1=xi1,xi3=xi3)%*%g1 )
   r2=as.vector( M.spline(T2,xi1=xi1,xi3=xi3)%*%g2 )
   R1=as.vector( I.spline(T1,xi1=xi1,xi3=xi3)%*%g1 )

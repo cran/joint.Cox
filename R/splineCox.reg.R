@@ -1,9 +1,11 @@
 splineCox.reg <-
 function(t.event,event,Z,xi1=min( t.event ),xi3=max( t.event ),
-         kappa_grid=c(seq(10,1e+17,length=30)),LCV_plot=TRUE){
+         kappa=c(seq(10,1e+17,length=30)),LCV.plot=TRUE){
 
 d=event
+Z=as.matrix(Z)
 p=ncol(Z)
+
 Omega=c(192,-132,24,12,0,
         -132,96,-24,-12,12,
         24,-24,24,-24,24,
@@ -11,7 +13,7 @@ Omega=c(192,-132,24,12,0,
         0,12,24,-132,192)
 Omega=matrix(Omega,5,5)/( (xi3-xi1)/2 )^5
 
-############ LCV function ###############
+## Log-likelihood function ##
 l.func=function(phi){
   b=phi[(5+1):(5+p)]
   g=exp(  pmin(phi[1:5],500)  ) ## M-spline coefficients ##
@@ -27,10 +29,11 @@ l.func=function(phi){
 DF_upper=18+p
 
 L=DF=NULL
+p0=rep(0,5+p)
 
-for(k in 1:length(kappa_grid)){
-  K=kappa_grid[k]
-  res=nlm(l.func,p=rep(0,5+p),hessian=TRUE)
+for(k in 1:length(kappa)){
+  K=kappa[k]
+  res=nlm(l.func,p=p0,hessian=TRUE)
   D_PL=diag( c(1/exp(res$estimate[1:5]),rep(1,p)) )
   H_PL=-D_PL%*%res$hessian%*%D_PL
   H=H_PL
@@ -42,19 +45,34 @@ for(k in 1:length(kappa_grid)){
   }
 }
 
-K_est=kappa_grid[L-DF==max(L-DF)][1]
-DF_est=DF[L-DF==max(L-DF)][1]
+LCV=L-DF
+K=K_est=kappa[which.max(LCV)]
+DF_est=DF[which.max(LCV)]
+LCV_est=LCV[which.max(LCV)]
 
 ########## Plotting LCV ##########
-if(LCV_plot==TRUE){
+if(LCV.plot==TRUE){
   par(mfrow=c(1,3))
-  plot(kappa_grid,L,xlab="K",ylab="logL",type="b",lwd=3)
-  plot(kappa_grid,pmin(DF,10+p),xlab="K",ylab="DF",type="b",lwd=3)
-  plot(kappa_grid,L-DF,xlab="K",ylab="LCV=logL-DF",type="b",lwd=3)
-  points(K_est,max(L-DF),xlab="K",col="red",pch=17,cex=2)
+  plot(kappa,L,xlab="K",ylab="logL",type="b",lwd=3)
+  plot(kappa,pmin(DF,10+p),xlab="K",ylab="DF",type="b",lwd=3)
+  plot(kappa,LCV,xlab="K",ylab="LCV=logL-DF",type="b",lwd=3)
+  points(K_est,LCV_est,col="red",pch=17,cex=2)
 }
 
-list(kappa=K_est,DF=DF_est,LCV=max(L-DF),
-     kappa_grid=kappa_grid,L_grid=L,DF_grid=DF,LCV_grid=L-DF)
+res=nlm(l.func,p=p0,hessian=TRUE)
+
+beta_est=res$est[(5+1):(5+p)]
+h_est=exp(res$est[1:5])
+
+H_PL=-res$hessian
+V=solve(-H_PL,tol=10^(-50))
+beta_se=sqrt(diag(V)[(5+1):(5+p)])
+h_var=diag(h_est)%*%V[1:5,1:5]%*%diag(h_est)
+
+beta_res=c(estimate=beta_est,SE=beta_se,
+        Lower=beta_est-1.96*beta_se,Upper=beta_est+1.96*beta_se)
+
+list(beta=beta_res,h=h_est,h_var=h_var,
+     kappa=K_est,DF=DF_est,LCV=LCV_est)
 
 }

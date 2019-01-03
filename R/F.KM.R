@@ -1,7 +1,6 @@
 F.KM <-
 function(time,widths,t.death,death){
 m=length(widths)
-F_event_at_X=F_noevent=numeric(m)
 
 res_KM=survfit(Surv(t.death, death)~1)
 t.sort=summary(res_KM)$time
