@@ -16,11 +16,11 @@ F.windows.Weibull(time, widths, X, Z1, Z2, beta1, beta2, eta, theta, alpha,
 \arguments{
   \item{time}{prediction time (=t)}
   \item{widths}{length of window (=w)}
-  \item{X}{event time occurred < time}
-  \item{Z1}{a vector of covariates}
-  \item{Z2}{a vector of covariates; usually Z1=Z2}
-  \item{beta1}{regression coefficients for progression}
-  \item{beta2}{regression coefficients for death}
+  \item{X}{time of tumour progression < time}
+  \item{Z1}{a vector of covariates for progression}
+  \item{Z2}{a vector of covariates for death}
+  \item{beta1}{a vector of regression coefficients for progression}
+  \item{beta2}{a vector of regression coefficients for death}
   \item{eta}{frailty variance}
   \item{theta}{copula parameter}
   \item{alpha}{parameter related to frailty; usually alpha=1}
@@ -44,8 +44,8 @@ Predicted probability of death is calculated given the event status (X<=t or X>t
 \item{F_noevent }{F(t,t+w|X>t, Z1, Z2)}
 }
 \references{
-Emura T, Nakatochi M, Matsui S, Michimae H, Rondeau V (2017), Personalized dynamic prediction of death according to tumour progression and high-dimensional
- genetic factors: meta-analysis with a joint model Statistical Methods in Medical Research, doi:10.1177/0962280216688032
+Emura T, Nakatochi M, Matsui S, Michimae H, Rondeau V (2018), Personalized dynamic prediction of death according to tumour progression and high-dimensional
+ genetic factors: meta-analysis with a joint model, Stat Methods Med Res 27(9):2842-58
 }
 \author{Sayaka Shinohara, Takeshi Emura}
 

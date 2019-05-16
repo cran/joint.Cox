@@ -30,7 +30,7 @@ kappa = c(seq(10, 1e+17, length = 30)), LCV.plot = TRUE)
 }
 \references{
 Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
- Statistical Methods in Medical Research, doi: 10.1177/0962280215604510
+ Stat Methods Med Res 26(6): 2649-66
 
 Emura T, Matsui S, Rondeau V (2019), Survival Analysis with Correlated Endpoint: Joint Frailty-copula models,
  JSS Research Series in Statistics, Springer

@@ -58,10 +58,10 @@ If "nlm" does not converge, then we randomize the initial value by adding unifor
 
 \references{
 Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
- Statistical Methods in Medical Research, doi: 10.1177/0962280215604510
+ Stat Methods Med Res 26(6): 2649-66
 
 Hu YH, Emura T (2015), Maximum likelihood estimation for a special exponential family under random double-truncation,
- Computational Statistics, 30 (No. 4): 1199-1229
+ Computational Stat 30 (4): 1199-1229
 }
 \author{Takeshi Emura, Shih JH}
 

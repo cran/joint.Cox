@@ -23,8 +23,8 @@ The "time" argument is a vector satisfying the contraints xi1<=time<=xi3. Otherw
 Emura T, Chen YH (2018). Analysis of Survival Data with Dependent Censoring, 
 Copula-Based Approaches, JSS Research Series in Statistics, Springer, Singapore.
 
-Supplementary Material to: Emura T, Nakatochi M, Murotani K, Rondeau V (2015), A joint frailty-copula model between tumour progression and death for meta-analysis,
- Statistical Methods in Medical Research, doi: 10.1177/0962280215604510
+Supplementary Material to: Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
+ Stat Methods Med Res 26(6): 2649-66
 }
 \author{Takeshi Emura}
 

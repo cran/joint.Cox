@@ -37,7 +37,7 @@ jointCox.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
 }
 
 \details{
-We employ "nlm" routine to maximize the penalized likelihood function with the initial value described in Emura et al. (2015).
+We employ "nlm" routine to maximize the penalized likelihood function with the initial value described in Emura et al. (2017).
 If "nlm" does not converge, then we randomize the initial value by adding uniform random variables (Hu and Emura, 2015).
 }
 \value{
@@ -59,10 +59,10 @@ If "nlm" does not converge, then we randomize the initial value by adding unifor
 
 \references{
 Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
- Statistical Methods in Medical Research, doi: 10.1177/0962280215604510
+ Stat Methods Med Res 26(6): 2649-66
 
 Hu YH, Emura T (2015), Maximum likelihood estimation for a special exponential family under random double-truncation,
- Computational Statistics, 30 (No. 4): 1199-1229
+ Computational Stat 30 (4): 1199-1229
 }
 \author{Takeshi Emura}
 

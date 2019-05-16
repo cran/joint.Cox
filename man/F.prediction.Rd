@@ -6,7 +6,7 @@
 Dynamic prediction of death using a joint frailty-copula model. 
 Probability of death between t and t+w is calculated given a tumour progression time X and covariates Z1 and Z2. 
 If X<=t, the prediction probability is F(t,t+w|X=x, Z1, Z2). If X>t, the prediction probability is F(t,t+w|X>t, Z1, Z2). 
-This function is a simpler version of F.windows. 
+This function is a simpler version of F.windows. The guide for using this function shall be explained by Emura et al. (2019).
 }
 \usage{
 F.prediction(time, widths, X, Z1, Z2, beta1, beta2, eta, theta, alpha,
@@ -16,11 +16,11 @@ F.prediction(time, widths, X, Z1, Z2, beta1, beta2, eta, theta, alpha,
 \arguments{
   \item{time}{prediction time (=t)}
   \item{widths}{length of window (=w)}
-  \item{X}{event time (=X) that occurrs before time t; if the event does not occur before time t, one can set arbitrary value X greater than t}
-  \item{Z1}{a vector of covariates}
-  \item{Z2}{a vector of covariates}
-  \item{beta1}{regression coefficients for progression}
-  \item{beta2}{regression coefficients for death}
+  \item{X}{time of tumour progression; if tumour progression does not occur before time t, one can set an arbitrary value X greater than t}
+  \item{Z1}{a vector of covariates for progression}
+  \item{Z2}{a vector of covariates for death}
+  \item{beta1}{a vector of regression coefficients for progression}
+  \item{beta2}{a vector of regression coefficients for death}
   \item{eta}{frailty variance}
   \item{theta}{copula parameter}
   \item{alpha}{parameter related to frailty; usually alpha=1}
@@ -41,8 +41,10 @@ Predicted probability of death is calculated given the event status (X<=t or X>t
 \item{F }{F(t,t+w|X=x, Z1, Z2) or F(t,t+w|X>t, Z1, Z2)}
 }
 \references{
-Emura T, Nakatochi M, Matsui S, Michimae H, Rondeau V (2017), Personalized dynamic prediction of death according to tumour progression and high-dimensional
- genetic factors: meta-analysis with a joint model Statistical Methods in Medical Research, doi:10.1177/0962280216688032
+Emura T, Nakatochi M, Matsui S, Michimae H, Rondeau V (2018), Personalized dynamic prediction of death according to tumour progression and high-dimensional
+ genetic factors: meta-analysis with a joint model, Stat Methods Med Res 27(9):2842-58
+
+Emura T, Michimae H, Matsui S (2019-), A clinician's guide for dynamic risk prediction of death using an R package joint.Cox, submitted for publication.
 }
 \author{Takeshi Emura}
 

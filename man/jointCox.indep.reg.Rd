@@ -53,10 +53,10 @@ If "nlm" does not converge, then we randomize the initial value by adding unifor
 
 \references{
 Rondeau V, Pignon JP, Michiels S (2015). A joint model for dependence between clustered times to tumour progression and deaths: A meta-analysis of chemotherapy in head and neck cancer.
- Statistical Method in Medical Research 24(6):711-729.
+ Stat Methods Med Res 24(6):711-729.
 
 Hu YH, Emura T (2015), Maximum likelihood estimation for a special exponential family under random double-truncation,
- Computational Statistics, 30 (No. 4): 1199-1229
+ Computational Statist 30(4): 1199-1229
 }
 \author{Takeshi Emura}
 

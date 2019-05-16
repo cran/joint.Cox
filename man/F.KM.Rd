@@ -26,8 +26,8 @@ Prediction probability of death is calculated without covariates.
 \item{F }{F(t,t+w)}
 }
 \references{
-Emura T, Nakatochi M, Matsui S, Michimae H, Rondeau V (2017), Personalized dynamic prediction of death according to tumour progression and high-dimensional
- genetic factors: meta-analysis with a joint model Statistical Methods in Medical Research, doi:10.1177/0962280216688032
+Emura T, Nakatochi M, Matsui S, Michimae H, Rondeau V (2018), Personalized dynamic prediction of death according to tumour progression and high-dimensional
+ genetic factors: meta-analysis with a joint model, Stat Methods Med Res 27(9):2842-58
 }
 \author{Takeshi Emura}
 
