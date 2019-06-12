@@ -1,6 +1,6 @@
 splineCox.reg <-
 function(t.event,event,Z,xi1=min( t.event ),xi3=max( t.event ),
-         kappa=c(seq(10,1e+17,length=30)),LCV.plot=TRUE){
+         kappa=c(seq(10,1e+17,length=30)),LCV.plot=TRUE,p0=rep(0,5+p)){
 
 d=event
 Z=as.matrix(Z)
@@ -29,7 +29,6 @@ l.func=function(phi){
 DF_upper=18+p
 
 L=DF=NULL
-p0=rep(0,5+p)
 
 for(k in 1:length(kappa)){
   K=kappa[k]

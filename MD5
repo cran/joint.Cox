@@ -1,4 +1,4 @@
-05aae2faa0424e7f550b25c950b1de68 *DESCRIPTION
+7e0274f4c2a5a459037373d6b99ad8a4 *DESCRIPTION
 e02c765f3dcd9792ec6e64c5a3bd4cbb *NAMESPACE
 50c13fda245e1550f1423c18eec88836 *R/F.KM.R
 257af7b75f782245f27c04bc51d7c6ce *R/F.prediction.R
@@ -12,7 +12,7 @@ c6fb40d802df6b36ac0c60533ef74856 *R/M.spline.R
 005899e23b67b5d9a835733aab681771 *R/cmprskCox.reg.R
 8cacda49ca192072f192b4f55c0b5c05 *R/jointCox.indep.reg.R
 9a3bcd0791d919710df20c0d6b1ba8ce *R/jointCox.reg.R
-af5dd6b1f0255a9319e7e51ced9b5280 *R/splineCox.reg.R
+3ecce4eec9a1dfebc64d09c41e4616f7 *R/splineCox.reg.R
 d95482efeb72a7b9c660ff64dedf7cfe *data/dataOvarian.rda
 c3df9002676bac7a436a3bd47d40ac7f *data/dataOvarian1.rda
 a9cb690e5639065f3a831b91611c7b0e *data/dataOvarian2.rda
@@ -30,7 +30,7 @@ efef8302bf7d8d2dd763dccf0fecf0bd *man/cmprskCox.reg.Rd
 b6b8a57f1f77f15805bc050577125245 *man/dataOvarian.Rd
 6a25e32089f7c4e3efc3973952cd1e67 *man/dataOvarian1.Rd
 0cea3e02c4a7f040f5823c38648d93f7 *man/dataOvarian2.Rd
-9d20a4c826866f31117fe286941e0334 *man/joint.Cox-package.Rd
+dbbc916a3e0d7619a83630f857b2ee9c *man/joint.Cox-package.Rd
 dd87c2976b218bf465e8ef91a7111cfe *man/jointCox.indep.reg.Rd
 9a30ac42c226d091f29e955d887352e5 *man/jointCox.reg.Rd
-37dbdd109c9e4ff47ee9c579a3a6e765 *man/splineCox.reg.Rd
+d4efdab3c46c7dd964862a0d5ad5ec6b *man/splineCox.reg.Rd

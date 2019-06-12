@@ -5,7 +5,7 @@
 \description{Fitting the Cox model when the baseline hazard function is approximated by splines.}
 \usage{
 splineCox.reg(t.event, event, Z, xi1 = min(t.event), xi3 = max(t.event), 
-kappa = c(seq(10, 1e+17, length = 30)), LCV.plot = TRUE)
+kappa = c(seq(10, 1e+17, length = 30)), LCV.plot = TRUE,p0=rep(0,5+p))
 }
 \arguments{
   \item{t.event}{a vector for time-to-event}
@@ -15,6 +15,7 @@ kappa = c(seq(10, 1e+17, length = 30)), LCV.plot = TRUE)
   \item{xi3}{upper bound for the hazard function; the default is max(t.event)}
   \item{kappa}{a vector for candidate smoothing parameters in LCV. Only positive values are allowed. Values too close to zero may yeild errors (see below).}
   \item{LCV.plot}{Plot the LCV curves if "TRUE"}
+  \item{p0}{Initial values to maximize the penalized likelihood (5+p parameters; five M-spline coefficients and p regression coefficients)}
 }
 \details{The definition of LCV is given in Emura et al. (2019). This is a subroutine used to compute the optimal smoothing parameter (kappa) in the penalized likelihood of Emura et al. (2017).
  The error message "Error in nlm(l.func, p = rep(0, 5 + p), hessian = TRUE):non-finite value supplied by 'nlm'"
@@ -34,6 +35,8 @@ Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model
 
 Emura T, Matsui S, Rondeau V (2019), Survival Analysis with Correlated Endpoint: Joint Frailty-copula models,
  JSS Research Series in Statistics, Springer
+
+Emura T, Shih JH (2019-), R programs for semiparametric Cox regression with cubic M-spline (in preparation) 
 }
 \author{Takeshi Emura}
 %% ~Make other sections like Warning with \section{Warning }{....} ~
