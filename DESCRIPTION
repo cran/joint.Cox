@@ -2,8 +2,8 @@ Package: joint.Cox
 Type: Package
 Title: Joint Frailty-Copula Models for Tumour Progression and Death in
         Meta-Analysis
-Version: 3.3
-Date: 2019-6-12
+Version: 3.4
+Date: 2019-7-17
 Author: Takeshi Emura
 Maintainer: Takeshi Emura <takeshiemura@gmail.com>
 Description: Perform likelihood estimation and dynamic prediction under
@@ -17,6 +17,6 @@ Description: Perform likelihood estimation and dynamic prediction under
 License: GPL-2
 Depends: survival
 NeedsCompilation: no
-Packaged: 2019-06-12 08:08:35 UTC; user
+Packaged: 2019-07-17 10:04:08 UTC; user
 Repository: CRAN
-Date/Publication: 2019-06-12 08:20:03 UTC
+Date/Publication: 2019-07-18 06:36:06 UTC
