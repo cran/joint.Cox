@@ -11,14 +11,15 @@ Perform likelihood estimation and dynamic prediction under joint frailty-copula 
  The methods are applicable for meta-analytic data combining several studies.
  The methods can analyze data having information on both terminal event time (e.g., time-to-death) and non-terminal event time (e.g., time-to-tumour progression).
  See Emura et al. (2017) and Emura et al. (2018) for more details.
+ More details on these methods can also be found in a book of Emura et al. (2019).
  Survival data from ovarian cancer patients are also available.
 }
 \details{
 \tabular{ll}{
 Package: \tab joint.Cox\cr
 Type: \tab Package\cr
-Version: \tab 3.4\cr
-Date: \tab 2019-7-17\cr
+Version: \tab 3.5\cr
+Date: \tab 2019-9-8\cr
 License: \tab GPL-2\cr
 }
 }
@@ -32,6 +33,8 @@ Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model
 
 Emura T, Nakatochi M, Matsui S, Michimae H, Rondeau V (2018), Personalized dynamic prediction of death according to tumour progression and high-dimensional
  genetic factors: meta-analysis with a joint model, Stat Methods Med Res 27(9):2842-58
+
+Emura T, Matsui S, Rondeau V (2019), Survival Analysis with Correlated Endpoints, Joint Frailty-Copula Models, JSS Research Series in Statistics, Springer
 }
 \keyword{ package }
 

@@ -6,7 +6,8 @@
 Simulating data from the Weibull joint frailty-copula model.
 }
 \usage{
-Weibull.simu(G,N,scale1,scale2,shape1,shape2,beta1,beta2,eta,theta,alpha,C.max)
+Weibull.simu(G,N,scale1,scale2,shape1,shape2,beta1,beta2,
+ eta,theta,alpha,beta12=0,C.max,Z.dist=runif,...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -21,7 +22,10 @@ Weibull.simu(G,N,scale1,scale2,shape1,shape2,beta1,beta2,eta,theta,alpha,C.max)
   \item{eta}{frailty variance}
   \item{theta}{copula parameter}
   \item{alpha}{parameter related to frailty; usually alpha=1}
+  \item{beta12}{regression coefficients for copula}
   \item{C.max}{the upper bound for the censoring distribution}
+  \item{Z.dist}{the distribution of a covariate Z}
+  \item{...}{parameters for Z.dist}
 }
 
 \details{
@@ -39,13 +43,17 @@ To be discussed in the paper of Emura et al. (2019).
 \item{Z}{: covariate}
 }
 \references{
-Emura T, Wu BH, Michimae H (2019), The Weibull joint frailty-copula model, in preparation
+Wu BH, Michimae H, Emura T (2019), Meta-analysis of individual patient data with semi-competing risks
+ under the Weibull joint frailty-copula model, in revision.
 }
 \author{Takeshi Emura}
 
 \examples{
 Weibull.simu(G=5,N=2,scale1=1,scale2=1,shape1=1,shape2=1,
         beta1=1,beta2=1,eta=0.5,theta=2,alpha=1,C.max=5)
+
+Weibull.simu(G=5,N=2,scale1=1,scale2=1,shape1=1,shape2=1,
+        beta1=1,beta2=1,eta=0.5,theta=2,alpha=1,C.max=5,Z.dist=rbinom,size=1,prob=0.5)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

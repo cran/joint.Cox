@@ -1,17 +1,18 @@
-\name{jointCox.reg}
-\alias{jointCox.reg}
+\name{jointCox.reg1}
+\alias{jointCox.reg1}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Penalized Likelihood Estimation under the Joint Cox Models Between Tumour Progression 
- and Death for Meta-Analysis
+ and Death for Meta-Analysis; Extension1
 }
 \description{
 Perform regression analyses under a copula-based joint Cox proportional hazards model between tumour progression and death for meta-analysis,
- which is proposed by Emura et al. (2017). The methodological details can be found in Emura et al. (2019).
+ which is proposed by Emura et al. (201x).
+ The method extends the joint frailty copula model of Emura et al. (2017).
  The method is applicable for meta-analysis combining several studies or for cluster survival data.
 }
 \usage{
-jointCox.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
+jointCox.reg1(t.event, event, t.death, death, Z1, Z2, Z12, group, alpha = 1,
  kappa1 = c(seq(10, 1e+17, length = 30)),kappa2 = c(seq(10, 1e+17, length = 30)),
  LCV.plot = TRUE, Randomize_num = 10,
  Adj = 500,convergence.par=FALSE)
@@ -24,6 +25,7 @@ jointCox.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
   \item{death}{a vector for death indicator(=1 if death; =0 if not death)}
   \item{Z1}{a matrix for covariates associated with TTP; ncol(Z1)=the number of covariates}
   \item{Z2}{a matrix for covariates associated with OS; ncol(Z2)=the number of covariates}
+  \item{Z12}{a matrix for covariates associated with copula; ncol(Z12)=the number of covariates}
   \item{group}{a vector for group identification numbers, like 1,2,3....}
   \item{alpha}{A value related to the frailty (e.g., alpha=0 or =1); alpha=1 is default}
   \item{kappa1}{a vector for candidate smoothing parameters}
@@ -43,8 +45,9 @@ If "nlm" does not converge, then we randomize the initial value by adding unifor
 \item{beta1 }{Regression coefficient for Z1}
 \item{beta2 }{Regression coefficient for Z2}
 \item{eta }{Frailty parameter (variance)}
-\item{theta }{Copula parameter under the Clayton copula}
-\item{tau }{Kendall's tau corresponding to the copula parameter}
+\item{theta }{Baseline copula parameter under the Clayton copula}
+\item{tau }{Kendall's tau corresponding to the baseline copula parameter}
+\item{beta12 }{Regression coefficient for a copula parameter}
 \item{LCV1}{Likelihood cross-validation for TTP}
 \item{LCV2}{Likelihood cross-validation for OS}
 \item{g }{M-spline coefficients for TTP}
@@ -56,11 +59,10 @@ If "nlm" does not converge, then we randomize the initial value by adding unifor
 }
 
 \references{
+Emura T, Rondeau V (201x), Kendalls tau for individual-level surrogacy for failure time endpoints in meta-analysis (in preparation)
+
 Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
  Stat Methods Med Res 26(6): 2649-66
-
-Emura T, Matsui S, Rondeau V (2019), Survival Analysis with Correlated Endpoints; Joint Frailty-Copula Models,
- JSS Research Series in Statistics, Springer
 
 Hu YH, Emura T (2015), Maximum likelihood estimation for a special exponential family under random double-truncation,
  Computational Stat 30 (4): 1199-1229
@@ -76,21 +78,7 @@ Hu YH, Emura T (2015), Maximum likelihood estimation for a special exponential f
  but is not crucial (can simply be ignored).}
 
 \examples{
-############## Reproduce the results of Emura et al. (2017) #############
-data(dataOvarian)
-t.event=dataOvarian$t.event
-event=dataOvarian$event
-t.death=dataOvarian$t.death
-death=dataOvarian$death
-Z1=dataOvarian$CXCL12
-group=dataOvarian$group
-alpha_given=0
-kappa_grid=seq(10,1e+17,length=30)
-set.seed(1)
-#jointCox.reg(t.event=t.event,event=event,t.death=t.death,death=death,
-#                 Z1=Z1,Z2=Z1,group=group,alpha=alpha_given,
-#                 kappa1=kappa_grid,kappa2=kappa_grid,LCV.plot=TRUE,Adj=500)
-
+##
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

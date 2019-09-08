@@ -17,9 +17,9 @@ G_id=as.numeric((levels(factor(group))))
 G=length(G_id)
 
 ########### Summary ###########
-n.event=tapply(d1, group, FUN=sum)
-n.death=tapply(d2, group, FUN=sum)
-n.censor=tapply(1-d2, group, FUN=sum)
+n.event=xtabs(d1~group)
+n.death=xtabs(d2~group)
+n.censor=xtabs(1-d2~group)
 count=cbind(table(group),n.event,n.death,n.censor)  
 colnames(count)=c("No.of samples","No.of events","No.of deaths","No.of censors")
 

@@ -1,6 +1,7 @@
 Weibull.simu <-
 function(G,N,scale1,scale2,shape1=1,shape2=1,
-        beta1,beta2,eta=0.5,theta=2,alpha=1,C.max=5){
+        beta1,beta2,eta=0.5,theta=2,alpha=1,beta12=0,C.max=5,
+        Z.dist=runif,...){
   
   X.vec=D.vec=C.vec=t.event=t.death=event=death=Z=group=NULL
   
@@ -14,14 +15,15 @@ function(G,N,scale1,scale2,shape1=1,shape2=1,
       ij=ij+1
       
       group[ij]=i
-      Z[ij]=runif(1)
+      Z[ij]=Z.dist(1,...)
       r1=scale1*u*exp(beta1*Z[ij])
       r2=scale2*(u^alpha)*exp(beta2*Z[ij])
       V1=runif(1)
       V2=runif(1)
       X=( -1/r1*log(1-V1) )^(1/shape1)
-      W=(1-V1)^(-theta)
-      D=( 1/theta/r2*log(1-W+W*(1-V2)^(-theta/(theta+1))) )^(1/shape2)
+      theta12=theta*exp(beta12*Z[ij])
+      W=(1-V1)^(-theta12)
+      D=( 1/theta12/r2*log(1-W+W*(1-V2)^(-theta12/(theta12+1))) )^(1/shape2)
       C=runif(1,min=0,max=C.max)
       X.vec[ij]=X
       D.vec[ij]=D

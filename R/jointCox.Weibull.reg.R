@@ -14,14 +14,14 @@ function (t.event,event,t.death,death,Z1,Z2,group,alpha=1,
   G_id = as.numeric((levels(factor(group))))
   G = length(G_id)
   
-  ########### Summary ###########
   N = length(t.event)
-  n.event = tapply(d1, group, FUN = sum)
-  n.death = tapply(d2, group, FUN = sum)
-  n.censor = tapply(1 - d2, group, FUN = sum)
-  count = cbind(table(group), n.event, n.death, n.censor)
-  colnames(count) = c("No.of samples", "No.of events", "No.of deaths", "No.of censors")
-
+  ########### Summary ###########
+  n.event=xtabs(d1~group)
+  n.death=xtabs(d2~group)
+  n.censor=xtabs(1-d2~group)
+  count=cbind(table(group),n.event,n.death,n.censor)  
+  colnames(count)=c("No.of samples","No.of events","No.of deaths","No.of censors")
+ 
   T1_mean = mean(T1)
   T2_mean = mean(T2)
 
