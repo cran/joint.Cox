@@ -1,4 +1,4 @@
-641079301835ac5d745cc22e50700d77 *DESCRIPTION
+47668795fd7f48ba73df353fb3d90420 *DESCRIPTION
 bc13e81b8b432b49931cc5600e7bbac8 *NAMESPACE
 50c13fda245e1550f1423c18eec88836 *R/F.KM.R
 257af7b75f782245f27c04bc51d7c6ce *R/F.prediction.R
@@ -9,7 +9,7 @@ d8d0fcbcfe04e62b0d9bcfc6b84985b3 *R/F.windows.R
 3181639dd7d72a2f601ba800f00d8edc *R/I.spline.R
 c6fb40d802df6b36ac0c60533ef74856 *R/M.spline.R
 e6e1f1309a75dc146e3a9607d62b219c *R/Weibull.simu.R
-005899e23b67b5d9a835733aab681771 *R/cmprskCox.reg.R
+88c19f7ff18e94375c5f7743d9617c1b *R/cmprskCox.reg.R
 569d57de536b6df528f22303b3bc7497 *R/jointCox.Weibull.reg.R
 a61e3b89946428dd2fc0b31f470ee421 *R/jointCox.indep.reg.R
 95c227d66c6961868b8bb3093bec5da6 *R/jointCox.reg.R
@@ -28,11 +28,11 @@ bbbb7417c0ddaf6df60dfa4dde9f85f1 *man/F.windows.Weibull.Rd
 9760cdea5a8a96d0aafded03824bae79 *man/I.spline.Rd
 77d8ed0c06318cdbea30c08f5cb52dba *man/M.spline.Rd
 165883e03d04218f752b05ef17224bfa *man/Weibull.simu.Rd
-efef8302bf7d8d2dd763dccf0fecf0bd *man/cmprskCox.reg.Rd
+bb65dd42f5beeb9019da442104a47d28 *man/cmprskCox.reg.Rd
 b6b8a57f1f77f15805bc050577125245 *man/dataOvarian.Rd
 6a25e32089f7c4e3efc3973952cd1e67 *man/dataOvarian1.Rd
 0cea3e02c4a7f040f5823c38648d93f7 *man/dataOvarian2.Rd
-ca9cb8f317962f1c39116aca031cfe98 *man/joint.Cox-package.Rd
+8b7c0cae4e896815f5c5771153fc72c9 *man/joint.Cox-package.Rd
 7ccba418d4fd212892540307c4727727 *man/jointCox.Weibull.reg.Rd
 dd87c2976b218bf465e8ef91a7111cfe *man/jointCox.indep.reg.Rd
 218194bb32998a1b77f74600e8fbb4cb *man/jointCox.reg.Rd

@@ -13,11 +13,11 @@ cmprskCox.reg <-
   G_id = as.numeric((levels(factor(group))))
   G = length(G_id)
   
-  n.event1 = tapply(d1,group,FUN = sum)
-  n.event2 = tapply(d2,group,FUN = sum)
-  n.censor = tapply(1-d1-d2,group,FUN = sum)
+  n.event1 = xtabs(d1~group)
+  n.event2 = xtabs(d2~group)
+  n.censor = xtabs(1-d1-d2~group)
   count = cbind(table(group),n.event1,n.event2,n.censor)
-  colnames(count) = c("No.of samples","No.of events","No.of deaths","No.of censors")
+  colnames(count) = c("No.of samples","No.of event1","No.of event2","No.of censor")
   
   xi1 = min(t.event)
   xi3 = max(t.event)

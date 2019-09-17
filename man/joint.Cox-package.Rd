@@ -18,8 +18,8 @@ Perform likelihood estimation and dynamic prediction under joint frailty-copula 
 \tabular{ll}{
 Package: \tab joint.Cox\cr
 Type: \tab Package\cr
-Version: \tab 3.5\cr
-Date: \tab 2019-9-8\cr
+Version: \tab 3.6\cr
+Date: \tab 2019-9-17\cr
 License: \tab GPL-2\cr
 }
 }
