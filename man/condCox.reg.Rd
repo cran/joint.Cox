@@ -1,9 +1,9 @@
-\name{jointCox.reg1}
-\alias{jointCox.reg1}
+\name{condCox.reg}
+\alias{condCox.reg}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Penalized Likelihood Estimation under the Joint Cox Models Between Tumour Progression 
- and Death for Meta-Analysis; Extension1
+ and Death for Meta-Analysis; A Conditional Copula Approach
 }
 \description{
 Perform regression analyses under a copula-based joint Cox proportional hazards model between tumour progression and death for meta-analysis,
@@ -12,7 +12,7 @@ Perform regression analyses under a copula-based joint Cox proportional hazards 
  The method is applicable for meta-analysis combining several studies or for cluster survival data.
 }
 \usage{
-jointCox.reg1(t.event, event, t.death, death, Z1, Z2, Z12, group, alpha = 1,
+condCox.reg(t.event, event, t.death, death, Z1, Z2, Z12, group, alpha = 1,
  kappa1 = c(seq(10, 1e+17, length = 30)),kappa2 = c(seq(10, 1e+17, length = 30)),
  LCV.plot = TRUE, Randomize_num = 10,
  Adj = 500,convergence.par=FALSE)

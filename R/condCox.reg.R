@@ -1,4 +1,4 @@
-jointCox.reg1 <-
+condCox.reg <-
 function(t.event,event,t.death,death,Z1,Z2,Z12,group,alpha=1,
          kappa1=c(seq(10,1e+17,length=30)),
          kappa2=c(seq(10,1e+17,length=30)),
@@ -10,6 +10,7 @@ d1=event
 d2=death
 Z1=as.matrix(Z1)
 Z2=as.matrix(Z2)
+Z12=as.matrix(Z12)
 p1=ncol(Z1)
 p2=ncol(Z2)
 p12=ncol(Z12)
@@ -71,7 +72,6 @@ l.func=function(phi){
     Gi=c(group==i)
     m1=sum(d1[Gi])
     m2=sum(d2[Gi])
-    #m12=sum(d1[Gi]*d2[Gi])
     EZ1=exp(bZ1[Gi])*R1[Gi]
     EZ2=exp(bZ2[Gi])*R2[Gi]
     D1=as.logical(d1[Gi])
@@ -138,7 +138,6 @@ LCV=-l.func(res$estimate)-DF
 convergence_res=c(MPL=MPL,DF=DF,LCV=LCV,code=res$code,
           No.of.iterations=res$iterations,No.of.randomizations=R_num)
 
-
 g_est=exp(res$est[1:5])
 h_est=exp(res$est[6:10])
 eta_est=exp(res$est[11])
@@ -148,30 +147,41 @@ tau0_est=theta0_est/(theta0_est+2)
 beta1_est=res$est[(12+1):(12+p1)]
 beta2_est=res$est[(12+p1+1):(12+p1+p2)]
 beta12_est=res$est[(12+p1+p2+1):(12+p1+p2+p12)]
+theta1_est=theta0_est*exp(beta12_est)
+tau1_est=theta1_est/(theta1_est+2)
 
 eta_se=eta_est*sqrt(diag(V)[11])
 theta0_se=theta0_est*sqrt(diag(V)[12])
 tau0_se=2/((theta0_est+2)^2)*theta0_se
+gamma1_se=sqrt(t(c(1,1))%*%V[c(12,12+p1+p2+1),c(12,12+p1+p2+1)]%*%c(1,1))
+theta1_se=theta1_est*gamma1_se
+tau1_se=2/((theta1_est+2)^2)*theta1_se
 beta1_se=sqrt(diag(V)[(12+1):(12+p1)])
 beta2_se=sqrt(diag(V)[(12+p1+1):(12+p1+p2)])
 beta12_se=sqrt(diag(V)[(12+p1+p2+1):(12+p1+p2+p12)])
 
 theta0_Lower=theta0_est*exp(-1.96*sqrt(diag(V)[12]))
 theta0_Upper=theta0_est*exp(1.96*sqrt(diag(V)[12]))
+theta1_Lower=theta1_est*exp(-1.96*gamma1_se)
+theta1_Upper=theta1_est*exp(+1.96*gamma1_se)
 
 g_var=diag(g_est)%*%V[1:5,1:5]%*%diag(g_est)
 h_var=diag(h_est)%*%V[6:10,6:10]%*%diag(h_est)
 
-beta1_res=c(estimate=beta1_est,SE=beta1_se,
-  Lower=beta1_est-1.96*beta1_se,Upper=beta1_est+1.96*beta1_se)
-beta2_res=c(estimate=beta2_est,SE=beta2_se,
-            Lower=beta2_est-1.96*beta2_se,Upper=beta2_est+1.96*beta2_se)
+
 eta_res=c(estimate=eta_est,SE=eta_se,
           Lower=eta_est*exp(-1.96*sqrt(diag(V)[11])),
           Upper=eta_est*exp(1.96*sqrt(diag(V)[11])))
 theta0_res=c(estimate=theta0_est,SE=theta0_se,Lower=theta0_Lower,Upper=theta0_Upper)
 tau0_res=c(estimate=tau0_est,tau_se=tau0_se,
           Lower=theta0_Lower/(theta0_Lower+2),Upper=theta0_Upper/(theta0_Upper+2))
+theta1_res=c(estimate=theta1_est,SE=theta1_se,Lower=theta1_Lower,Upper=theta1_Upper)
+tau1_res=c(estimate=tau1_est,tau_se=tau1_se,
+           Lower=theta1_Lower/(theta1_Lower+2),Upper=theta1_Upper/(theta1_Upper+2))
+beta1_res=c(estimate=beta1_est,SE=beta1_se,
+            Lower=beta1_est-1.96*beta1_se,Upper=beta1_est+1.96*beta1_se)
+beta2_res=c(estimate=beta2_est,SE=beta2_se,
+            Lower=beta2_est-1.96*beta2_se,Upper=beta2_est+1.96*beta2_se)
 beta12_res=c(estimate=beta12_est,SE=beta12_se,
             Lower=beta12_est-1.96*beta12_se,Upper=beta12_est+1.96*beta12_se)
 
@@ -180,10 +190,9 @@ if(convergence.par==FALSE){convergence.parameters=NULL}else{
 }
 
 list(count=count,
-     beta1=beta1_res,beta2=beta2_res,eta=eta_res,theta=theta0_res,
-     tau=tau0_res,beta12=beta12_res,
-     LCV1=LCV1_res,LCV2=LCV2_res,
-     g=g_est,h=h_est,g_var=g_var,h_var=h_var,
+     beta1=beta1_res,beta2=beta2_res,beta12=beta12_res,eta=eta_res,
+     theta0=theta0_res,tau0=tau0_res,theta1=theta1_res,tau1=tau1_res,
+     LCV1=LCV1_res,LCV2=LCV2_res,g=g_est,h=h_est,g_var=g_var,h_var=h_var,
      convergence=convergence_res,convergence.parameters=convergence.parameters
      )
 }

@@ -7,7 +7,7 @@ The Competing Risks Version of Penalized Likelihood Estimation under the Joint C
 }
 \description{
 Perform regression analyses under a copula-based joint Cox proportional hazards model between tumour progression and death for meta-analysis,
- which is proposed in Section 6.2 of Emura et al. (2017) and Section 5.1 of Emura et al. (2019-).
+ which is proposed in Section 6.2 of Emura et al. (2017) and Section 5.1 of Emura et al. (2020-).
  This is the competing risks version of "jointCox.reg".
  To avoid the indentifiability problem, the copula parameter (theta) should be given by user, e.g., theta=2.
  The method is applicable for meta-analysis combining several studies or for cluster survival data.
@@ -60,9 +60,8 @@ If "nlm" does not converge, then we randomize the initial value by adding unifor
 Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
  Stat Methods Med Res 26(6): 2649-66
 
-Emura T, Shih JH, Ha ID, Wilke RA (2019-), Comparison between the marginal hazard models and sub-hazard models with an assumed copula,
- in revision
-
+Emura T, Shih JH, Ha ID, Wilke RA (2020-), Comparison of the Marginal Hazard Model and the Sub-distribution Hazard Model for Competing Risks under an Assumed Copula,
+ Stat Methods Med Res, in press
 
 Hu YH, Emura T (2015), Maximum likelihood estimation for a special exponential family under random double-truncation,
  Computational Stat 30 (4): 1199-1229
