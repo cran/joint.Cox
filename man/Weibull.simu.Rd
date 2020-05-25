@@ -29,7 +29,7 @@ Weibull.simu(G,N,scale1,scale2,shape1,shape2,beta1,beta2,
 }
 
 \details{
-To be discussed in the paper of Emura et al. (2019).
+See Wu et al. (2020) for the algorithms.
 }
 \value{
 \item{X}{: time to event}
@@ -43,8 +43,8 @@ To be discussed in the paper of Emura et al. (2019).
 \item{Z}{: covariate}
 }
 \references{
-Wu BH, Michimae H, Emura T (2019), Meta-analysis of individual patient data with semi-competing risks
- under the Weibull joint frailty-copula model, in revision.
+Wu BH, Michimae H, Emura T (2020), Meta-analysis of individual patient data with semi-competing risks under
+ the Weibull joint frailty-copula model. Comp Stat, DOI: 10.1007/s00180-020-00977-1
 }
 \author{Takeshi Emura}
 

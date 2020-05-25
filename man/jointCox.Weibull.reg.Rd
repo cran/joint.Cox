@@ -6,8 +6,8 @@ Weibull-based Likelihood Estimation under the Joint Cox Models Between Tumour Pr
  and Death for Meta-Analysis
 }
 \description{
-Perform regression analyses under a copula-based joint Cox proportional hazards model between tumour progression and death for meta-analysis,
- which is proposed by Wu et al. (2019-).
+Perform Weibull regression analyses under a copula-based joint Cox proportional hazards model between tumour progression and death for meta-analysis,
+ which is proposed by Wu et al. (2020).
 }
 \usage{
 jointCox.Weibull.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
@@ -29,7 +29,7 @@ jointCox.Weibull.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
 }
 
 \details{
-We employ "nlm" routine to maximize the penalized likelihood function with the initial value described in Emura et al. (2017).
+We employ "nlm" routine to maximize the penalized likelihood function with the initial value described in Wu et al. (2020).
 If "nlm" does not converge, then we randomize the initial value by adding uniform random variables (Hu and Emura, 2015).
 }
 \value{
@@ -39,16 +39,23 @@ If "nlm" does not converge, then we randomize the initial value by adding unifor
 \item{eta }{Frailty parameter (variance)}
 \item{theta }{Copula parameter under the Clayton copula}
 \item{tau }{Kendall's tau corresponding to the copula parameter}
+\item{scale1 }{Scale parameter for the Weibull model of TTP}
+\item{shape1 }{Shape parameter for the Weibull model of TTP}
+\item{scale2 }{Scale parameter for the Weibull model of OS}
+\item{shape2 }{Shape parameter for the Weibull model of OS}
 \item{convergence }{convergence results for maximizing penalized likelihood}
 \item{convergence.parameters }{converged estimate, gradient, and Hessian matrix (log-transformed)}
 }
 
 \references{
+Wu BH, Michimae H, Emura T (2020), Meta-analysis of individual patient data with semi-competing risks under
+ the Weibull joint frailty-copula model. Comp Stat, DOI: 10.1007/s00180-020-00977-1
+
 Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
  Stat Methods Med Res 26(6): 2649-66
 
 Hu YH, Emura T (2015), Maximum likelihood estimation for a special exponential family under random double-truncation,
- Computational Stat 30 (4): 1199-1229
+ Comp Stat 30 (4): 1199-1229
 }
 \author{Takeshi Emura}
 

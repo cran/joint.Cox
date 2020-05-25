@@ -2,12 +2,12 @@
 \alias{cmprskCox.reg}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-The Competing Risks Version of Penalized Likelihood Estimation under the Joint Cox Models Between Tumour Progression 
+The Competing Risks Version of Penalized Likelihood Estimation under the Joint Cox Models Between Tumour Progression
  and Death for Meta-Analysis
 }
 \description{
 Perform regression analyses under a copula-based joint Cox proportional hazards model between tumour progression and death for meta-analysis,
- which is proposed in Section 6.2 of Emura et al. (2017) and Section 5.1 of Emura et al. (2020-).
+ which is proposed in Section 6.2 of Emura et al. (2017) and Section 5.1 of Emura et al. (2019).
  This is the competing risks version of "jointCox.reg".
  To avoid the indentifiability problem, the copula parameter (theta) should be given by user, e.g., theta=2.
  The method is applicable for meta-analysis combining several studies or for cluster survival data.
@@ -60,18 +60,18 @@ If "nlm" does not converge, then we randomize the initial value by adding unifor
 Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
  Stat Methods Med Res 26(6): 2649-66
 
-Emura T, Shih JH, Ha ID, Wilke RA (2020-), Comparison of the Marginal Hazard Model and the Sub-distribution Hazard Model for Competing Risks under an Assumed Copula,
- Stat Methods Med Res, in press
+Emura T, Shih JH, Ha ID, Wilke RA (2019), Comparison of the marginal hazard model and the sub-distribution hazard model for competing risks under an assumed copula,
+ Stat Methods Med Res, doi.org/10.1177/0962280219892295
 
 Hu YH, Emura T (2015), Maximum likelihood estimation for a special exponential family under random double-truncation,
- Computational Stat 30 (4): 1199-1229
+ Compu Stat 30 (4): 1199-1229
 }
 \author{Takeshi Emura, Shih JH}
 
 \section{Error }{"Error in integrate(func1, 0.001, 10, stop.on.error = FALSE):non-finite function value",
  an error occurring when the penalized likelihood is maximizad by "nlm". The error may frequently
  occur during the iterations for maximizing the penalized likelihood, but is not crucial (can simply be ignored).}
- 
+
 \section{Warning }{"NA/Inf replaced by maximum positive value", an error occurring when the penalized likelihood
  is maximizad by "nlm". The error frequently occurs during the iterations for maximizing the penalized likelihood,
  but is not crucial (can simply be ignored).}

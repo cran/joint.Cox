@@ -2,22 +2,22 @@ Package: joint.Cox
 Type: Package
 Title: Joint Frailty-Copula Models for Tumour Progression and Death in
         Meta-Analysis
-Version: 3.7
-Date: 2019-11-20
+Version: 3.8
+Date: 2020-5-25
 Author: Takeshi Emura
 Maintainer: Takeshi Emura <takeshiemura@gmail.com>
-Description: Perform likelihood estimation and dynamic prediction under
- joint frailty-copula models for tumour progression and death in meta-analysis.
- A penalized likelihood method is employed for estimating model parameters, where the baseline hazard functions are modeled by smoothing splines.
- The methods are applicable for meta-analytic data combining several studies.
- The methods can analyze data having information on both terminal event time (e.g., time-to-death) and non-terminal event time (e.g., time-to-tumour progression).
- See Emura et al. (2017) <doi:10.1177/0962280215604510> for likelihood estimation, and
- Emura et al. (2018) <doi:10.1177/0962280216688032> for dynamic prediction.
- More details on these methods can also be found in a book of Emura et al. (2019) <doi:10.1007/978-981-13-3516-7>.
+Description: Fit survival data and perform dynamic prediction under joint frailty-copula models for tumour progression and death.
+ Likelihood-based methods are employed for estimating model parameters, where the baseline hazard functions are modeled by the cubic M-spline or the Weibull model.
+ The methods are applicable for meta-analytic data containing individual-patient information from several studies.
+ Survival outcomes need information on both terminal event time (e.g., time-to-death) and non-terminal event time (e.g., time-to-tumour progression).
+ Methodologies were published in
+ Emura et al. (2017) <doi:10.1177/0962280215604510>, Emura et al. (2018) <doi:10.1177/0962280216688032>,
+ Emura et al. (2019) <doi:10.1177/0962280219892295>, and Wu et al. 2020 <doi:10.1007/s00180-020-00977-1>.
+ See also the book of Emura et al. (2019) <doi:10.1007/978-981-13-3516-7>.
  Survival data from ovarian cancer patients are also available.
 License: GPL-2
 Depends: survival
 NeedsCompilation: no
-Packaged: 2019-11-20 10:10:05 UTC; user
+Packaged: 2020-05-25 08:33:15 UTC; user
 Repository: CRAN
-Date/Publication: 2019-11-20 10:40:02 UTC
+Date/Publication: 2020-05-25 09:00:08 UTC
