@@ -44,7 +44,7 @@ See Wu et al. (2020) for the algorithms.
 }
 \references{
 Wu BH, Michimae H, Emura T (2020), Meta-analysis of individual patient data with semi-competing risks under
- the Weibull joint frailty-copula model. Comp Stat, DOI: 10.1007/s00180-020-00977-1
+ the Weibull joint frailty-copula model. Comp Stat 35(4):1525-52
 }
 \author{Takeshi Emura}
 

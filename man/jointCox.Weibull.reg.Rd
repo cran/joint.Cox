@@ -49,7 +49,7 @@ If "nlm" does not converge, then we randomize the initial value by adding unifor
 
 \references{
 Wu BH, Michimae H, Emura T (2020), Meta-analysis of individual patient data with semi-competing risks under
- the Weibull joint frailty-copula model. Comp Stat, DOI: 10.1007/s00180-020-00977-1
+ the Weibull joint frailty-copula model. Comp Stat 35(4):1525-52
 
 Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
  Stat Methods Med Res 26(6): 2649-66
