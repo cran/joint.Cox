@@ -14,7 +14,7 @@ Perform regression analyses under a copula-based joint Cox proportional hazards 
 \usage{
 condCox.reg(t.event, event, t.death, death, Z1, Z2, Z12, group, alpha = 1,
  kappa1 = c(seq(10, 1e+17, length = 30)),kappa2 = c(seq(10, 1e+17, length = 30)),
- LCV.plot = TRUE, Randomize_num = 10,
+ LCV.plot = TRUE, Randomize_num = 10, u.min = 0.001, u.max = 10,
  Adj = 500,convergence.par=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -32,6 +32,8 @@ condCox.reg(t.event, event, t.death, death, Z1, Z2, Z12, group, alpha = 1,
   \item{kappa2}{a vector for candidate smoothing parameters}
   \item{LCV.plot}{Plot the LCV curves if "TRUE"}
   \item{Randomize_num}{The number of randomizations for the ititial p0}
+  \item{u.min}{the lower bound of the numerical integration for the frailty term}
+  \item{u.max}{the upper bound of the numerical integration for the frailty term}
   \item{Adj}{Numerical adjustment to prevent overflow; Adj=500 is recommended}
   \item{convergence.par}{If TRUE, the converged estimate, gradient, and Hessian matrix are given (log-transformed)}
 }

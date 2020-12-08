@@ -45,6 +45,9 @@ Predicted probability of death is calculated given the event status (X<=t or X>t
 \references{
 Emura T, Nakatochi M, Matsui S, Michimae H, Rondeau V (2018), Personalized dynamic prediction of death according to tumour progression and high-dimensional
  genetic factors: meta-analysis with a joint model, Stat Methods Med Res 27(9):2842-58
+
+Shinohara S, Lin YH, Michimae H, Emura T (2020), Dynamic lifetime prediction using a Weibull-based bivariate failure time model:
+ a meta-analysis of individual-patient data, Comm Stat Simul, DOI:10.1080/03610918.2020.1855449
 }
 \author{Sayaka Shinohara, Takeshi Emura}
 

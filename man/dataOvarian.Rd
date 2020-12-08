@@ -5,7 +5,8 @@
 Survival data of 1003 ovarian cancer patients from 4 independent studies.
 }
 \description{
-The survival data was used to study if the CXCL12 gene expression is a predictive biomarker of survival endpoints in ovarian cancer.
+The data consist of 1003 surgically treated ovarian cancer patients from four studies (N1=110, N2=58, N3=278, N4=557).
+ Survival outcomes are given to study if the CXCL12 gene expression is a prognostic factor in ovarian cancer.
  The dataset was used in Emura et al. (2017), which is a subset of the curated ovarian data of Ganzfried et al (2013).
  We prepared the dataset by using "patientselection.config" in "Curated ovarian data" around May 2015 in the analysis of Emura et al. (2017).
 }
@@ -13,9 +14,9 @@ The survival data was used to study if the CXCL12 gene expression is a predictiv
 \format{
   A data frame with 1003 observations on the following 6 variables.
   \describe{
-    \item{\code{t.event}}{: time to event in days}
+    \item{\code{t.event}}{: time to event (days from surgery to tumour recurrence)}
     \item{\code{event}}{: event indicator (1=recurrence, 0=no recurrence)}
-    \item{\code{t.death}}{: time to death in days}
+    \item{\code{t.death}}{: time to death (days from surgery to death due to any cause)}
     \item{\code{death}}{: death indicator (1=death, 0=alive)}
     \item{\code{group}}{: study ID; group=4, 8, 11, or 14; see the details below}
     \item{\code{CXCL12}}{: CXCL12 gene expression}

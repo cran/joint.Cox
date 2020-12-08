@@ -2,7 +2,8 @@ condCox.reg <-
 function(t.event,event,t.death,death,Z1,Z2,Z12,group,alpha=1,
          kappa1=c(seq(10,1e+17,length=30)),
          kappa2=c(seq(10,1e+17,length=30)),
-         LCV.plot=TRUE,Randomize_num=10,Adj=500,convergence.par=FALSE){
+         LCV.plot=TRUE,Randomize_num=10,
+         u.min=0.001,u.max=10,Adj=500,convergence.par=FALSE){
 
 T1=t.event
 T2=t.death
@@ -52,7 +53,7 @@ l.func=function(phi){
   g1=exp( pmax( pmin(phi[1:5],500), -500)  )
   g2=exp( pmax( pmin(phi[6:10],500),-500)  )
   eta=exp(phi[11])
-  gamma0=min(phi[12],5) # avoid a very large MPL (due to gamma0=Inf) #
+  gamma0=phi[12]
   beta1=phi[(12+1):(12+p1)]
   beta2=phi[(12+p1+1):(12+p1+p2)]
   beta12=phi[(12+p1+p2+1):(12+p1+p2+p12)]
@@ -89,7 +90,7 @@ l.func=function(phi){
       u^(m1+alpha*m2)*E1*E2*D12*prod( (1+theta[Gi])^(d1[Gi]*d2[Gi]) )*dgamma(u,shape=1/eta,scale=eta)
     }
 
-    Int=try( integrate(func1,0.001,10,stop.on.error = FALSE) )
+    Int=try( integrate(func1,u.min,u.max,stop.on.error = FALSE) )
     if( class(Int)=="try-error" ){l=l-500000}else{
       if(Int$value==0){l=l-500000}else{
         l=l+log(Int$value)-Adj ### Re-adjustment to avoid too small D12 ###
