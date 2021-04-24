@@ -11,7 +11,7 @@ Perform Weibull regression analyses under a copula-based joint Cox proportional 
 }
 \usage{
 jointCox.Weibull.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
- Randomize_num = 10,Adj = 500,convergence.par=FALSE)
+ Randomize_num = 10, u.min = 0.001, u.max = 10, Adj = 500,convergence.par=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -24,6 +24,8 @@ jointCox.Weibull.reg(t.event, event, t.death, death, Z1, Z2, group, alpha = 1,
   \item{group}{a vector for group identification numbers, like 1,2,3....}
   \item{alpha}{A value related to the frailty (e.g., alpha=0 or =1); alpha=1 is default}
   \item{Randomize_num}{The number of randomizations for the ititial p0}
+  \item{u.min}{the lower bound of the numerical integration for the frailty term}
+  \item{u.max}{the upper bound of the numerical integration for the frailty term}
   \item{Adj}{Numerical adjustment to prevent overflow; Adj=500 is recommended}
   \item{convergence.par}{If TRUE, the converged estimate, gradient, and Hessian matrix are given (log-transformed)}
 }
@@ -76,10 +78,6 @@ death=dataOvarian$death
 Z1=dataOvarian$CXCL12
 group=dataOvarian$group
 alpha_given=0
-kappa_grid=seq(10,1e+17,length=30)
-
-t.event[t.event == 0] = 1 ## data can not be zero ##
-t.death[t.death == 0] = 1 ## data can not be zero ##
 
 #set.seed(1)
 #jointCox.Weibull.reg(t.event=t.event,event=event,t.death=t.death,death=death,

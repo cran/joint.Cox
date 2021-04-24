@@ -2,7 +2,8 @@ jointCox.reg <-
 function(t.event,event,t.death,death,Z1,Z2,group,alpha=1,
          kappa1=c(seq(10,1e+17,length=30)),
          kappa2=c(seq(10,1e+17,length=30)),
-         LCV.plot=TRUE,Randomize_num=10,Adj=500,convergence.par=FALSE){
+         LCV.plot=TRUE,Randomize_num=10,
+         u.min=0.001,u.max=10,Adj=500,convergence.par=FALSE){
 
 T1=t.event
 T2=t.death
@@ -20,7 +21,7 @@ G=length(G_id)
 n.event=xtabs(d1~group)
 n.death=xtabs(d2~group)
 n.censor=xtabs(1-d2~group)
-count=cbind(table(group),n.event,n.death,n.censor)  
+count=cbind(table(group),n.event,n.death,n.censor)
 colnames(count)=c("No.of samples","No.of events","No.of deaths","No.of censors")
 
 xi1=min( T1 )
@@ -53,7 +54,7 @@ l.func=function(phi){
   theta=min( exp(phi[12]),exp(5) )
   beta1=phi[(12+1):(12+p1)]
   beta2=phi[(12+p1+1):(12+p1+p2)]
-  
+
   l=-K1_est*t(g1)%*%Omega%*%g1-K2_est*t(g2)%*%Omega%*%g2
   bZ1=as.vector( Z1%*%beta1 )
   bZ2=as.vector( Z2%*%beta2 )
@@ -64,7 +65,7 @@ l.func=function(phi){
   l=l+sum( d1*(log(r1)+bZ1) )+sum( d2*(log(r2)+bZ2) )
 
   for(i in G_id){
-    
+
     Gi=c(group==i)
     m1=sum(d1[Gi])
     m2=sum(d2[Gi])
@@ -73,7 +74,7 @@ l.func=function(phi){
     EZ2=exp(bZ2[Gi])*R2[Gi]
     D1=as.logical(d1[Gi])
     D2=as.logical(d2[Gi])
-    
+
     func1=function(u){
       S1=pmin( exp( theta*u%*%t( EZ1 ) ), exp(500) )
       S2=pmin( exp( theta*u^alpha%*%t( EZ2 ) ), exp(500) )
@@ -84,17 +85,17 @@ l.func=function(phi){
       D12=exp(-Psi+Adj)  ### Adjustment to avoid too small D12 ###
       u^(m1+alpha*m2)*E1*E2*D12*(1+theta)^m12*dgamma(u,shape=1/eta,scale=eta)
     }
-    
-    Int=try( integrate(func1,0.001,10,stop.on.error = FALSE) ) 
+
+    Int=try( integrate(func1,u.min,u.max,stop.on.error = FALSE) )
     if( class(Int)=="try-error" ){l=l-500000}else{
       if(Int$value==0){l=l-500000}else{
-        l=l+log(Int$value)-Adj ### Re-adjustment to avoid too small D12 ### 
+        l=l+log(Int$value)-Adj ### Re-adjustment to avoid too small D12 ###
       }
     }
-    
+
   }
-  
-  -l  
+
+  -l
 }
 
 p0=rep(0,12+p1+p2)
@@ -129,7 +130,7 @@ if( is.na(det(H_PL))|det(H_PL)==0 ){DF=DF_upper}else{
   DF=min( max( sum( diag(solve(H_PL,tol=10^(-50))%*%H) ), p1+p2+2), DF_upper)
 }
 K1_est=K2_est=0
-LCV=-l.func(res$estimate)-DF 
+LCV=-l.func(res$estimate)-DF
 
 convergence_res=c(MPL=MPL,DF=DF,LCV=LCV,code=res$code,
           No.of.iterations=res$iterations,No.of.randomizations=R_num)

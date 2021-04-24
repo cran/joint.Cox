@@ -1,6 +1,10 @@
-jointCox.Weibull.reg <- 
+jointCox.Weibull.reg <-
 function (t.event,event,t.death,death,Z1,Z2,group,alpha=1,
-          Randomize_num=10,Adj=500,convergence.par=FALSE){
+          Randomize_num=10,u.min=0.001,u.max=10,
+          Adj=500,convergence.par=FALSE){
+
+  t.event[t.event<=0]=min(1,min(t.event[t.event>0]))
+  t.death[t.death<=0]=min(1,min(t.death[t.death>0]))
 
   T1 = t.event
   T2 = t.death
@@ -10,18 +14,18 @@ function (t.event,event,t.death,death,Z1,Z2,group,alpha=1,
   Z2 = as.matrix(Z2)
   p1 = ncol(Z1)
   p2 = ncol(Z2)
-  
+
   G_id = as.numeric((levels(factor(group))))
   G = length(G_id)
-  
+
   N = length(t.event)
   ########### Summary ###########
   n.event=xtabs(d1~group)
   n.death=xtabs(d2~group)
   n.censor=xtabs(1-d2~group)
-  count=cbind(table(group),n.event,n.death,n.censor)  
+  count=cbind(table(group),n.event,n.death,n.censor)
   colnames(count)=c("No.of samples","No.of events","No.of deaths","No.of censors")
- 
+
   T1_mean = mean(T1)
   T2_mean = mean(T2)
 
@@ -68,9 +72,9 @@ function (t.event,event,t.death,death,Z1,Z2,group,alpha=1,
         E1 = apply(log(S1/A)[, D1, drop = FALSE], MARGIN = 1, FUN = sum)
         E2 = apply(log(S2/A)[, D2, drop = FALSE], MARGIN = 1, FUN = sum)
         Psi = rowSums((1/theta) * log(A))
-        exp((m1 + alpha * m2) * log(u) + E1 + E2 - Psi + m12 * log(1 + theta) + log(dgamma(u, shape = 1/eta, scale = eta)) + Adj)
+        exp((m1+alpha*m2)*log(u)+E1+E2-Psi+m12*log(1+theta)+log(dgamma(u,shape=1/eta,scale=eta))+Adj)
       }
-      Int = try(integrate(func1, 0.001, 10, stop.on.error = FALSE))
+      Int = try(integrate(func1, u.min, u.max, stop.on.error = FALSE))
       if (class(Int) == "try-error") {
         l = l - 5e+05
       }
@@ -113,7 +117,7 @@ function (t.event,event,t.death,death,Z1,Z2,group,alpha=1,
   DF=6 + p1 + p2
   AIC = 2 * DF - 2 * (-l.func(res$estimate))
   BIC = log(N) * DF - 2 * (-l.func(res$estimate))
-  convergence_res = c(MPL = MPL, DF = DF, AIC = AIC, BIC = BIC,
+  convergence_res = c(ML = MPL, DF = DF, AIC = AIC, BIC = BIC,
                       code = res$code, No.of.iterations = res$iterations, No.of.randomizations = R_num)
   est = c(exp(res$est[1:6]), res$est[(6 + 1):(6 + p1 + p2)])
   est_var = diag(c(est[1:6], rep(1, p1 + p2))) %*% V %*% diag(c(est[1:6], rep(1, p1 + p2)))
@@ -136,7 +140,7 @@ function (t.event,event,t.death,death,Z1,Z2,group,alpha=1,
   g_se = sqrt(diag(g_var))
   h_se = sqrt(diag(h_var))
 
-  
+
   beta1_res=c(estimate=beta1_est,SE=beta1_se,
               Lower=beta1_est-1.96*beta1_se,Upper=beta1_est+1.96*beta1_se)
   beta2_res=c(estimate=beta2_est,SE=beta2_se,
@@ -153,12 +157,12 @@ function (t.event,event,t.death,death,Z1,Z2,group,alpha=1,
            Upper=g_est[1]*exp(+1.96*sqrt(diag(V)[1:1])))
   shape1=c(Estimate=g_est[2],SE=g_se[2],Lower=g_est[2]*exp(-1.96*sqrt(diag(V)[2:2])),
            Upper=g_est[2]*exp(+1.96*sqrt(diag(V)[2:2])))
-  
+
   scale2=c(Estimate=h_est[1],SE=h_se[1],Lower=h_est[1]*exp(-1.96*sqrt(diag(V)[3:3])),
            Upper=h_est[1]*exp(+1.96*sqrt(diag(V)[3:3])))
   shape2=c(Estimate=h_est[2],SE=h_se[2],Lower=h_est[2]*exp(-1.96*sqrt(diag(V)[4:4])),
            Upper=h_est[2]*exp(+1.96*sqrt(diag(V)[4:4])))
- 
+
   if (convergence.par==FALSE){convergence.parameters = NULL}else{
     convergence.parameters=list(log_estimate=res$est,gradient=-res$gradient,log_var=V)
   }

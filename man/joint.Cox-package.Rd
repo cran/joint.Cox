@@ -18,8 +18,8 @@ Fit survival data and perform dynamic prediction under joint frailty-copula mode
 \tabular{ll}{
 Package: \tab joint.Cox\cr
 Type: \tab Package\cr
-Version: \tab 3.10\cr
-Date: \tab 2020-12-8\cr
+Version: \tab 3.11\cr
+Date: \tab 2021-04-24\cr
 License: \tab GPL-2\cr
 }
 }
