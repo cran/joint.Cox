@@ -7,7 +7,7 @@ Simulating data from the Weibull joint frailty-copula model.
 }
 \usage{
 Weibull.simu(G,N,scale1,scale2,shape1,shape2,beta1,beta2,
- eta,theta,alpha,beta12=0,C.max,Z.dist=runif,...)
+ eta,copula="Clayton",theta,alpha,beta12=0,C.max,Z.dist=runif,...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -20,8 +20,9 @@ Weibull.simu(G,N,scale1,scale2,shape1,shape2,beta1,beta2,
   \item{beta1}{regression coefficients for progression}
   \item{beta2}{regression coefficients for death}
   \item{eta}{frailty variance}
+  \item{copula}{copula function; either "Clayton" (default) or "Gumbel"}
   \item{theta}{copula parameter}
-  \item{alpha}{parameter related to frailty; usually alpha=1}
+  \item{alpha}{parameter related to frailty, e.g., alpha=1}
   \item{beta12}{regression coefficients for copula}
   \item{C.max}{the upper bound for the censoring distribution}
   \item{Z.dist}{the distribution of a covariate Z}
@@ -51,6 +52,9 @@ Wu BH, Michimae H, Emura T (2020), Meta-analysis of individual patient data with
 \examples{
 Weibull.simu(G=5,N=2,scale1=1,scale2=1,shape1=1,shape2=1,
         beta1=1,beta2=1,eta=0.5,theta=2,alpha=1,C.max=5)
+
+Weibull.simu(G=5,N=2,scale1=1,scale2=1,shape1=1,shape2=1,
+        beta1=1,beta2=1,eta=0.5,copula="Gumbel",theta=2,alpha=1,C.max=5)
 
 Weibull.simu(G=5,N=2,scale1=1,scale2=1,shape1=1,shape2=1,
         beta1=1,beta2=1,eta=0.5,theta=2,alpha=1,C.max=5,Z.dist=rbinom,size=1,prob=0.5)

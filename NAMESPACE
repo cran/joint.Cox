@@ -1,6 +1,6 @@
 exportPattern("^[[:alpha:]]+")
 import(survival)
 importFrom("graphics", "par", "plot", "points")
-importFrom("stats", "dgamma", "integrate", "nlm", "rgamma", "runif", "xtabs")
+importFrom("stats", "dgamma", "integrate", "nlm", "rgamma", "runif", "uniroot", "xtabs")
 importFrom("graphics", "abline", "text","polygon")
 importFrom("grDevices", "gray")
