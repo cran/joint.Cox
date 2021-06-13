@@ -5,7 +5,7 @@ function(G,N,scale1,scale2,shape1=1,shape2=1,
         Z.dist=runif,...){
 
   if((copula!="Clayton")&(copula!="Gumbel")){
-    warning("The argument copula is wrong. It should either Clayton or Gumbel")
+    warning("The argument copula is wrong. It should be either Clayton or Gumbel")
   }else{
 
   X.vec=D.vec=C.vec=t.event=t.death=event=death=Z=group=NULL

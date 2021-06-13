@@ -2,8 +2,8 @@ Package: joint.Cox
 Type: Package
 Title: Joint Frailty-Copula Models for Tumour Progression and Death in
         Meta-Analysis
-Version: 3.12
-Date: 2021-05-13
+Version: 3.13
+Date: 2021-06-13
 Author: Takeshi Emura
 Maintainer: Takeshi Emura <takeshiemura@gmail.com>
 Description: Fit survival data and perform dynamic prediction under joint frailty-copula models for tumour progression and death.
@@ -19,6 +19,6 @@ Description: Fit survival data and perform dynamic prediction under joint frailt
 License: GPL-2
 Depends: survival
 NeedsCompilation: no
-Packaged: 2021-05-13 12:37:44 UTC; biouser
+Packaged: 2021-06-12 23:54:31 UTC; biouser
 Repository: CRAN
-Date/Publication: 2021-05-13 13:10:02 UTC
+Date/Publication: 2021-06-13 04:40:13 UTC

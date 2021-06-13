@@ -57,7 +57,7 @@ l.func=function(phi){
   beta1=phi[(12+1):(12+p1)]
   beta2=phi[(12+p1+1):(12+p1+p2)]
   beta12=phi[(12+p1+p2+1):(12+p1+p2+p12)]
-  theta=pmin( exp(gamma0+beta12*Z12),exp(5) )
+  theta=pmin( exp(gamma0+Z12%*%beta12),exp(5) )
 
   l=-K1_est*t(g1)%*%Omega%*%g1-K2_est*t(g2)%*%Omega%*%g2
   bZ1=as.vector( Z1%*%beta1 )
@@ -85,15 +85,14 @@ l.func=function(phi){
       E1=apply((S1/A)[,D1,drop=FALSE],MARGIN=1,FUN=prod)
       E2=apply((S2/A)[,D2,drop=FALSE],MARGIN=1,FUN=prod)
       Psi=log(A)%*%(1/theta[Gi])
-      #Psi=rowSums( (1/t(theta[Gi]))*log(A) )
-      D12=exp(-Psi+Adj)  ### Adjustment to avoid too small D12 ###
-      u^(m1+alpha*m2)*E1*E2*D12*prod( (1+theta[Gi])^(d1[Gi]*d2[Gi]) )*dgamma(u,shape=1/eta,scale=eta)
+      D=exp(-Psi+Adj)  ### Adjustment to avoid too small D ###
+      u^(m1+alpha*m2)*E1*E2*D*prod( (1+theta[Gi])^(d1[Gi]*d2[Gi]) )*dgamma(u,shape=1/eta,scale=eta)
     }
 
     Int=try( integrate(func1,u.min,u.max,stop.on.error = FALSE) )
     if( class(Int)=="try-error" ){l=l-500000}else{
       if(Int$value==0){l=l-500000}else{
-        l=l+log(Int$value)-Adj ### Re-adjustment to avoid too small D12 ###
+        l=l+log(Int$value)-Adj ### Re-adjustment to avoid too small D ###
       }
     }
 
@@ -125,7 +124,7 @@ DF_upper=18+p1+p2+p12
 temp=(det(H_PL)==0)|is.na(det(H_PL))
 if(temp){V=solve( -H_PL+diag(rep(0.0001,12+p1+p2+p12)) ,tol=10^(-50))}else{  V=solve(-H_PL,tol=10^(-50))}
 
-D_PL=diag( c(1/exp(res$estimate[1:12]),rep(1,p1+p2+p12)) )
+D_PL=diag( c(1/exp(res$estimate[1:11]),1,rep(1,p1+p2+p12)) )
 H_PL=D_PL%*%H_PL%*%D_PL
 H=H_PL
 H[1:5,1:5]=H[1:5,1:5]+2*K1_est*Omega
@@ -148,11 +147,12 @@ tau0_est=theta0_est/(theta0_est+2)
 beta1_est=res$est[(12+1):(12+p1)]
 beta2_est=res$est[(12+p1+1):(12+p1+p2)]
 beta12_est=res$est[(12+p1+p2+1):(12+p1+p2+p12)]
-theta1_est=theta0_est*exp(beta12_est)
+theta1_est=theta0_est*exp(beta12_est[1])
 tau1_est=theta1_est/(theta1_est+2)
 
 eta_se=eta_est*sqrt(diag(V)[11])
-theta0_se=theta0_est*sqrt(diag(V)[12])
+gamma0_se=sqrt(diag(V)[12])
+theta0_se=theta0_est*gamma0_se
 tau0_se=2/((theta0_est+2)^2)*theta0_se
 gamma1_se=sqrt(t(c(1,1))%*%V[c(12,12+p1+p2+1),c(12,12+p1+p2+1)]%*%c(1,1))
 theta1_se=theta1_est*gamma1_se
@@ -161,8 +161,8 @@ beta1_se=sqrt(diag(V)[(12+1):(12+p1)])
 beta2_se=sqrt(diag(V)[(12+p1+1):(12+p1+p2)])
 beta12_se=sqrt(diag(V)[(12+p1+p2+1):(12+p1+p2+p12)])
 
-theta0_Lower=theta0_est*exp(-1.96*sqrt(diag(V)[12]))
-theta0_Upper=theta0_est*exp(1.96*sqrt(diag(V)[12]))
+theta0_Lower=theta0_est*exp(-1.96*gamma0_se)
+theta0_Upper=theta0_est*exp(1.96*gamma0_se)
 theta1_Lower=theta1_est*exp(-1.96*gamma1_se)
 theta1_Upper=theta1_est*exp(+1.96*gamma1_se)
 

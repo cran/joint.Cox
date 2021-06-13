@@ -30,7 +30,8 @@ Weibull.simu(G,N,scale1,scale2,shape1,shape2,beta1,beta2,
 }
 
 \details{
-See Wu et al. (2020) for the algorithms.
+See Wu et al. (2020) for the algorithms for the Clayton copula. The model has been extended by including the covariate effect
+ on a copula (beta12). See the conditional copula model of Emura et al. (2021). The Gumbel copula is also available.  
 }
 \value{
 \item{X}{: time to event}
