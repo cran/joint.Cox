@@ -30,15 +30,26 @@ xi1=min( T1 )
 xi3=max( T2 )
 
 ######## Choose smoothing parameters K1 and K2 ##########
-res1=splineCox.reg(t.event,event,Z1,xi1=xi1,xi3=xi3,
-              kappa=kappa1,LCV.plot=LCV.plot)
-res2=splineCox.reg(t.death,death,Z2,xi1=xi1,xi3=xi3,
-              kappa=kappa2,LCV.plot=LCV.plot)
+res1=try( splineCox.reg(t.event,event,Z1,xi1=xi1,xi3=xi3,
+                        kappa=kappa1,LCV.plot=LCV.plot) )
+if( class(res1)=="try-error" ){
+  K1_est=max(kappa1)
+  LCV1_res=c(K1=K1_est,LCV1=NA)
+}else{
+  K1_est=res1$kappa
+  LCV1_res=c(K1=K1_est,LCV1=res1$LCV)
+}
 
-K1_est=res1$kappa
-LCV1_res=c(K1=K1_est,LCV1=res1$LCV)
-K2_est=res2$kappa
-LCV2_res=c(K2=K2_est,LCV2=res2$LCV)
+
+res2=try( splineCox.reg(t.death,death,Z2,xi1=xi1,xi3=xi3,
+                          kappa=kappa2,LCV.plot=LCV.plot) )
+if( class(res2)=="try-error" ){
+  K2_est=max(kappa2)
+  LCV2_res=c(K2=K2_est,LCV2=NA)
+}else{
+  K2_est=res2$kappa
+  LCV2_res=c(K2=K2_est,LCV2=res2$LCV)
+}
 
 Omega=c(192,-132,24,12,0,
         -132,96,-24,-12,12,

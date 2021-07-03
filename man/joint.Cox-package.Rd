@@ -18,8 +18,8 @@ Fit survival data and perform dynamic prediction under joint frailty-copula mode
 \tabular{ll}{
 Package: \tab joint.Cox\cr
 Type: \tab Package\cr
-Version: \tab 3.13\cr
-Date: \tab 2021-06-13\cr
+Version: \tab 3.14\cr
+Date: \tab 2021-07-03\cr
 License: \tab GPL-2\cr
 }
 }
@@ -38,6 +38,8 @@ Emura T, Matsui S, Rondeau V (2019), Survival Analysis with Correlated Endpoints
 
 Emura T, Shih JH, Ha ID, Wilke RA (2020), Comparison of the marginal hazard model and the sub-distribution hazard model for competing risks under an assumed Copula,
  Stat Methods Med Res 29(8):2307-27
+
+Emura T, Sofeu C, Rondeau V (2021), Conditional copula models for correlated survival endpoints in meta-analyses of randomized controlled trials, in revision
 
 Shinohara S, Lin YH, Michimae H, Emura T (2020), Dynamic lifetime prediction using a Weibull-based bivariate failure time model:
  a meta-analysis of individual-patient data, Comm Stat-Simul, DOI:10.1080/03610918.2020.1855449
