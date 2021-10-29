@@ -17,7 +17,7 @@ I.spline(time, xi1, xi3)
  The output shows the values of the 5 basis functions at "time",
  giving a matrix with nrow=length(time) and ncol=5.
  The five basis functions were originally given in the Supplementary Material of Emura et al. (2017).
- More details can be found in Emura and Chen (2018), Emura et al. (2019), and Shih and Emura (2020-). 
+ More details can be found in Emura and Chen (2018), Emura et al. (2019), and Shih and Emura (2021). 
  The "time" argument should be a vector satisfying the contraints xi1<=time<=xi3.
  If "time" does not meet the constraints, error messages are shown.
 }
@@ -34,7 +34,7 @@ Emura T, Matsui S, Rondeau V (2019), Survival Analysis with Correlated Endpoints
 Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
  Stat Methods Med Res 26(6): 2649-66: Supplementary Material. 
 
-Shih JH, Emura T (2020-), Penalized Cox regression with a five-parameter spline model, Commun Stat-Theor, in revision.
+Shih JH, Emura T (2021) Penalized Cox regression with a five-parameter spline model, Commun Stat-Theor 50(16):3749-68
 }
 \author{Takeshi Emura}
 

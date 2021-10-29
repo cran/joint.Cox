@@ -6,9 +6,11 @@ Penalized Likelihood Estimation under the Joint Cox Models Between Tumour Progre
  and Death for Meta-Analysis; A Conditional Copula Approach
 }
 \description{
-Perform regression analyses under a copula-based joint Cox proportional hazards model between tumour progression and death for meta-analysis,
- which is proposed by Emura et al. (201x).
- The method extends the joint frailty copula model of Emura et al. (2017).
+An extension of the function "joint.Cox(.)" by regression on a conditional copula.
+ Perform joint regression analyses under a copula-based joint Cox proportional hazards model between tumour progression and death for meta-analysis,
+ which is proposed by Emura et al. (2021).
+ The method extends the joint frailty copula model of Emura et al. (2017) by adding a regression function
+ on a copula parameter.
  The method is applicable for meta-analysis combining several studies or for cluster survival data.
 }
 \usage{
@@ -61,7 +63,9 @@ If "nlm" does not converge, then we randomize the initial value by adding unifor
 }
 
 \references{
-Emura T, Rondeau V (201x), Kendalls tau for individual-level surrogacy for failure time endpoints in meta-analysis (in preparation)
+Emura T, Sofeu C, Rondeau V (2021), Conditional copula models for correlated survival endpoints:
+ individual patient data meta-analysis of randomized controlled trials,
+ Stat Methods Med Res, doi:10.1177/09622802211046390
 
 Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
  Stat Methods Med Res 26(6): 2649-66
@@ -80,11 +84,29 @@ Hu YH, Emura T (2015), Maximum likelihood estimation for a special exponential f
  but is not crucial (can simply be ignored).}
 
 \examples{
-##
+
+data=Weibull.simu(G=10,N=50,scale1=1.5,scale2=1,beta1=-0.2,beta2=-0.2,beta12=0.5,
+                    eta=0.5,copula="Clayton",theta=2,alpha=1,
+                    C.max=5,Z.dist=rbinom,size=1,prob=0.5)
+t.event=data$t.event
+event=data$event
+t.death=data$t.death
+death=data$death
+group=data$group
+Z1=as.matrix(data$Z)
+Z2=Z12=Z1
+kappa=seq(1,10000,length=50)
+
+#condCox.reg(t.event=t.event,event=event,t.death=t.death,death=death,
+#             Z1=Z1,Z2=Z2,Z12=Z12,group=group,alpha=1,
+#             kappa1=kappa,kappa2=kappa,Randomize_num=1,LCV.plot=FALSE,u.max=20)
+
 }
+
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ Penalized likelihood estimation }
 \keyword{ Semi-competing risk }
 \keyword{ Cox regression }
+\keyword{ Conditional copula }
 \keyword{ Clayton copula }

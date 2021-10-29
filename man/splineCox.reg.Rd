@@ -23,10 +23,10 @@ kappa = c(seq(10, 1e+17, length = 30)), LCV.plot = TRUE,p0=rep(0,5+p))
 One can perform Cox-type regression for censored survival data with covariates. The method is essentially the same as
  as Cox regression (Cox 1972) expect for the models of the baseline hazard function.
  Unlike the nonparametric model of Cox (1972), the method applies a five-parameter spline model as originally proposed by Emura et al. (2017).
- The method is detailed in Section 2.4 of Emura et al. (2019). See also Shih and Emura (2020-) for more details.
+ The method is detailed in Section 2.4 of Emura et al. (2019). See also Shih and Emura (2021) for more details.
  This method is also used as a subroutine for computing the optimal smoothing parameter (kappa1 and kappa2) for
- many advanced functions, such as "jointCox.reg" and "cmprskCox.reg".
- The definition of LCV is given in Section 3.7 of Emura et al. (2019). See also Shih and Emura (2020-).
+ many advanced functions, such as "jointCox.reg", "cmprskCox.reg", and "condCox.reg".
+ The definition of LCV is given in Section 3.7 of Emura et al. (2019). See also Shih and Emura (2021).
  The error message "Error in nlm(l.func, p = rep(0, 5 + p), hessian = TRUE):non-finite value supplied by 'nlm'"
  may imply that some candidate parameters for kappa are too close to zero; please exclude such values from kappa.
  The output values are usually similar to those given by "coxph(Surv(t.event,event)~Z)". 
@@ -49,7 +49,7 @@ Emura T, Matsui S, Rondeau V (2019), Survival Analysis with Correlated Endpoints
 Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
  Stat Methods Med Res 26(6): 2649-66: Supplementary Material. 
 
-Shih JH, Emura T (2020-), Penalized Cox regression with a five-parameter spline model, Commun Stat-Theor, in revision.
+Shih JH, Emura T (2021) Penalized Cox regression with a five-parameter spline model, Commun Stat-Theor 50(16):3749-68
 }
 \author{Takeshi Emura}
 %% ~Make other sections like Warning with \section{Warning }{....} ~

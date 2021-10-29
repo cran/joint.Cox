@@ -3,8 +3,10 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Simulating data from the Weibull joint frailty-copula model}
 \description{
-Simulating data from the Weibull joint frailty-copula model.
- The form of copulas can be the Clayton (default), Frank, Gumbel, or BB1.
+Simulating clustered (grouped) data from the joint frailty-copula model
+ with the Weibull baseline hazard functions.
+ Copulas can be the Clayton (default), Frank, Gumbel, or BB1.
+ Covariate effects are specified by the Cox models given a frailty term. 
 }
 \usage{
 Weibull.simu(G,N,scale1,scale2,shape1,shape2,beta1,beta2,
@@ -21,7 +23,7 @@ Weibull.simu(G,N,scale1,scale2,shape1,shape2,beta1,beta2,
   \item{beta1}{regression coefficients for progression}
   \item{beta2}{regression coefficients for death}
   \item{eta}{frailty variance}
-  \item{copula}{copula function; either "Clayton" (default) or "Gumbel"}
+  \item{copula}{copula function; "Clayton" (default), "Gumbel", "Frank", or "BB1"}
   \item{theta}{copula parameter}
   \item{d}{BB1 copula's departure parameter from the Clayton (d=0 is default)}
   \item{alpha}{parameter related to frailty, e.g., alpha=1}
@@ -33,9 +35,12 @@ Weibull.simu(G,N,scale1,scale2,shape1,shape2,beta1,beta2,
 }
 
 \details{
-See Wu et al. (2020) for the algorithms for the Clayton copula. The model has been extended by including the covariate effect
- on a copula (beta12). See the conditional copula model of Emura et al. (2021).
- The Frank, Gumbel, and BBB1 copulas are also available.
+See Wu et al. (2020) for the algorithms for the Clayton copula.
+ The method was later extended by including the covariate effect
+ on a copula (beta12) via the conditional copula model of Emura et al. (2021),
+ The available copulas are the Frank, Gumbel, and BB1 copulas.
+ For the BB1 copula, please see Supplementary Material:Additional simulation studies under
+ the copula misspecification in Emura et al. (2021),
 }
 \value{
 \item{X}{: time to event}
@@ -53,7 +58,14 @@ See Wu et al. (2020) for the algorithms for the Clayton copula. The model has be
 Wu BH, Michimae H, Emura T (2020), Meta-analysis of individual patient data with semi-competing risks under
  the Weibull joint frailty-copula model. Comp Stat 35(4):1525-52
 
-Emura T, Sofeu C, Rondeau V (2021), Conditional copula models for correlated survival endpoints in meta-analyses of randomized controlled trials, in revision
+Emura T, Sofeu C, Rondeau V (2021), Conditional copula models for correlated survival endpoints:
+ individual patient data meta-analysis of randomized controlled trials,
+ Stat Methods Med Res, doi:10.1177/09622802211046390
+
+Supplementary Material:Additional simulation studies under the copula misspecification
+ in "Emura T, Sofeu C, Rondeau V (2021), Conditional copula models for correlated survival endpoints:
+ individual patient data meta-analysis of randomized controlled trials,
+ Stat Methods Med Res, doi:10.1177/09622802211046390"
 }
 \author{Takeshi Emura}
 
@@ -72,4 +84,5 @@ Weibull.simu(G=5,N=2,scale1=1,scale2=1,shape1=1,shape2=1,
 \keyword{ Simulation }
 \keyword{ Semi-competing risk }
 \keyword{ Clayton copula }
+\keyword{ BB1 copula }
 \keyword{ Weibull }% __ONLY ONE__ keyword per line
