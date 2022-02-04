@@ -1,11 +1,11 @@
 Weibull.simu <-
 function(G,N,scale1,scale2,shape1=1,shape2=1,
         beta1,beta2,eta=0.5,copula="Clayton",theta=2,d=0,
-        alpha=1,beta12=0,C.max=5,tau=FALSE,
+        alpha=1,beta12=0,C.max=5,cmprsk=FALSE,tau=FALSE,
         Z.dist=runif,...){
 
   if((copula!="Clayton")&(copula!="Gumbel")&(copula!="Frank")&(copula!="BB1")){
-    warning("The argument copula is wrong. It should be Clayton, Frank, Gumbel, or BB1")
+    warning("The input for copula is wrong. It should be Clayton, Frank, Gumbel, or BB1")
   }else{
 
   X.vec=D.vec=C.vec=t.event=t.death=event=death=Z=group=tau.vec=NULL
@@ -94,6 +94,15 @@ function(G,N,scale1,scale2,shape1=1,shape2=1,
              t.event=t.event,event=event,
              t.death=t.death,death=death,
              group=group,Z=Z)
+
+  if(cmprsk==TRUE){
+    event1=as.numeric(t.event==X.vec)
+    event2=as.numeric(t.event==D.vec)
+    Dat=data.frame(X=X.vec,D=D.vec,C=C.vec,
+                   t.event=t.event,event1=event1,
+                   event2=event2,group=group,Z=Z)
+  }
+
   if(tau==TRUE){ Dat=cbind(Dat,tau=tau.vec) }
   Dat
   }

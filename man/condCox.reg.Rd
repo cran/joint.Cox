@@ -65,13 +65,13 @@ If "nlm" does not converge, then we randomize the initial value by adding unifor
 \references{
 Emura T, Sofeu C, Rondeau V (2021), Conditional copula models for correlated survival endpoints:
  individual patient data meta-analysis of randomized controlled trials,
- Stat Methods Med Res, doi:10.1177/09622802211046390
+ Stat Methods Med Res 30(12):2634-50
 
 Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
- Stat Methods Med Res 26(6): 2649-66
+ Stat Methods Med Res 26(6):2649-66
 
 Hu YH, Emura T (2015), Maximum likelihood estimation for a special exponential family under random double-truncation,
- Computational Stat 30 (4): 1199-1229
+ Computational Stat 30(4):1199-1229
 }
 \author{Takeshi Emura}
 
